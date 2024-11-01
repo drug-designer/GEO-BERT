@@ -2,8 +2,7 @@
 
 ## 环境安装示例
 
-
-bash
+```bash
 conda create -n GEO-BERT python==3.7
 conda install -c openbabel openbabel
 pip install tensorflow==2.3
@@ -14,6 +13,7 @@ pip install matplotlib
 pip install hyperopt
 pip install scikit-learn
 其他软件包可以使用最新版本进行安装。
+```
 
 ## 文件夹结构
 
