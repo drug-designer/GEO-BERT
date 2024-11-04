@@ -1,6 +1,6 @@
 # GEO-BERT
 
-## 环境安装示例
+## Environmental Installation
 
 ```bash
 conda create -n GEO-BERT python==3.7
@@ -12,24 +12,24 @@ pip install pandas
 pip install matplotlib
 pip install hyperopt
 pip install scikit-learn
-其他软件包可以使用最新版本进行安装。
+Other packages can be installed using the latest version.
 ```
 
-## 文件夹结构
+## Folder Structure
 
-pretrain_new: 包含GEO-BERT预训练任务的代码。
+pretrain_new: contains code for GEO-BERT pre training tasks.
 
-dataset_scoffold_random: 包含构建用于预训练和微调的数据集的代码。
+dataset-scoffold_random: contains code for building datasets for pre training and fine-tuning.
 
-utils_new_hyperopt: 包含将分子转换为三维结构并计算键长和键角的代码。
+utilis_new-hyperop: contains code for converting molecules into three-dimensional structures and calculating bond lengths and bond angles.
 
-data: 包含每个下游任务的数据集。
+data: contains the dataset for each downstream task.
 
-## GEO-BERT 的使用示例
+## Example of using GEO-BERT
 
-### 预训练示例
+### Example of pre-training
 
-所需文件：
+Required files:
 
 utils_new_hyperopt.py
 
@@ -43,9 +43,9 @@ data.txt
 
 python pretrain.py
 
-### 微调示例
+### Example of fine-tuning
 
-DYRK1A 数据集所需文件：
+Required files for DYRK1A dataset:
 
 utils_new_hyperopt.py
 
@@ -59,6 +59,6 @@ DYRK1A.csv
 
 python Class_hyperopt_DYRK1A.py
 
-## 致谢
-该代码部分基于 MG-BERT和FG-BERT 构建。非常感谢他们的开源代码！
+## Acknowledgments
+This code is partially built based on MG-BERT and FG-BERT. Thank you very much for their open-source code!
 
