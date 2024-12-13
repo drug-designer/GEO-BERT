@@ -230,16 +230,16 @@ def main(seed, args):
 
             def compute_confusion_matrix(precited, expected):
                
-                part = precited ^ expected  # 对结果进行分类，亦或使得判断正确的为0,判断错误的为1
+                part = precited ^ expected  
                 part = part.astype(np.int64)
                 
-                pcount = np.bincount(part)  # 分类结果统计，pcount[0]为0的个数，pcount[1]为1的个数
-                tp_list = list(precited & expected)  # 将TP的计算结果转换为list
-                fp_list = list(precited & ~expected)  # 将FP的计算结果转换为list
-                tp = tp_list.count(1)  # 统计TP的个数
-                fp = fp_list.count(1)  # 统计FP的个数
-                tn = pcount[0] - tp  # 统计TN的个数
-                fn = pcount[1] - fp  # 统计FN的个数
+                pcount = np.bincount(part)  
+                tp_list = list(precited & expected)  
+                fp_list = list(precited & ~expected)  
+                tp = tp_list.count(1) 
+                fp = fp_list.count(1)  
+                tn = pcount[0] - tp  
+                fn = pcount[1] - fp  
                 return tp, fp, tn, fn
             Y1 = np.array(y_pl).flatten()
             T1 = np.array(y_t).flatten()
@@ -340,15 +340,15 @@ def main(seed, args):
         f1 = f1_score(y_t, y_pl)
 
         def compute_confusion_matrix(precited, expected):
-            part = precited ^ expected  # 对结果进行分类，亦或使得判断正确的为0,判断错误的为1
+            part = precited ^ expected  
             part=part.astype(np.int64)
-            pcount = np.bincount(part)  # 分类结果统计，pcount[0]为0的个数，pcount[1]为1的个数
-            tp_list = list(precited & expected)  # 将TP的计算结果转换为list
-            fp_list = list(precited & ~expected)  # 将FP的计算结果转换为list
-            tp = tp_list.count(1)  # 统计TP的个数
-            fp = fp_list.count(1)  # 统计FP的个数
-            tn = pcount[0] - tp  # 统计TN的个数
-            fn = pcount[1] - fp  # 统计FN的个数
+            pcount = np.bincount(part)  
+            tp_list = list(precited & expected)  
+            fp_list = list(precited & ~expected)  
+            tp = tp_list.count(1)  
+            fp = fp_list.count(1) 
+            tn = pcount[0] - tp  
+            fn = pcount[1] - fp  
             return tp, fp, tn, fn
         Y1 = np.array(y_pl).flatten()
         T1 = np.array(y_t).flatten()
