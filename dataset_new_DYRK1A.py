@@ -52,16 +52,16 @@ class Graph_Classification_Dataset(object):
 
         self.dataset1 = tf.data.Dataset.from_tensor_slices(
             (train_data[self.smiles_field], train_data[self.label_field]))    
-        self.dataset1 = self.dataset1.map(self.tf_numerical_smiles).cache().padded_batch(16, padded_shapes=(    #  原来是 32
-            tf.TensorShape([None]), tf.TensorShape([None, None]),tf.TensorShape([None, None]),tf.TensorShape([1]))).shuffle(100).prefetch(16)    #原代码是100
+        self.dataset1 = self.dataset1.map(self.tf_numerical_smiles).cache().padded_batch(16, padded_shapes=(    
+            tf.TensorShape([None]), tf.TensorShape([None, None]),tf.TensorShape([None, None]),tf.TensorShape([1]))).shuffle(100).prefetch(16)   
 
         self.dataset2 = tf.data.Dataset.from_tensor_slices((test_data[self.smiles_field], test_data[self.label_field]))
-        self.dataset2 = self.dataset2.map(self.tf_numerical_smiles).padded_batch(512, padded_shapes=(                 #原代码是padded_batch(512
-            tf.TensorShape([None]), tf.TensorShape([None, None]), tf.TensorShape([None, None]),tf.TensorShape([1]))).cache().prefetch(100)     #原代码是100
+        self.dataset2 = self.dataset2.map(self.tf_numerical_smiles).padded_batch(512, padded_shapes=(                 
+            tf.TensorShape([None]), tf.TensorShape([None, None]), tf.TensorShape([None, None]),tf.TensorShape([1]))).cache().prefetch(100)     
 
         self.dataset3 = tf.data.Dataset.from_tensor_slices((val_data[self.smiles_field], val_data[self.label_field]))
-        self.dataset3 = self.dataset3.map(self.tf_numerical_smiles).padded_batch(512, padded_shapes=(                  #原代码是padded_batch(512
-            tf.TensorShape([None]), tf.TensorShape([None, None]), tf.TensorShape([None, None]),tf.TensorShape([1]))).cache().prefetch(100)      #原代码是100
+        self.dataset3 = self.dataset3.map(self.tf_numerical_smiles).padded_batch(512, padded_shapes=(                  
+            tf.TensorShape([None]), tf.TensorShape([None, None]), tf.TensorShape([None, None]),tf.TensorShape([1]))).cache().prefetch(100)     
 
         return self.dataset1, self.dataset2, self.dataset3
 
