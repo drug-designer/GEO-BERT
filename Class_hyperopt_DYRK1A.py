@@ -382,7 +382,7 @@ def main(seed, args):
 
 space = {"dense_dropout": hp.quniform("dense_dropout", 0, 0.1, 0.01), 
         "learning_rate": hp.loguniform("learning_rate", np.log(2e-5), np.log(10e-5)),
-        "batch_size":hp.choice("batch_size", [16,32,48,64]),    # 源代码 [16,32,48,64]
+        "batch_size":hp.choice("batch_size", [16,32,48,64]),    
         "num_heads":hp.choice("num_heads", [4,8]),
         }
 
@@ -442,25 +442,6 @@ print(hy_main(best_dict))
 #     print(test_auc_list)
 #     print(test_all_auc_list)
 
-
-#  DYRK1A      145wanweight4  test auc:0.8725       145wanweight1  test auc:0.8512
-
-
-#DYRK1A test auc:0.8642 mcc:0.5487 accuracy:0.7730 precision:0.7449 recall:0.8111 f1:0.7766 SP:0.7368
-
-#DYRK1A test auc:0.8600 mcc:0.6000 accuracy:0.8000 precision:0.8118 recall:0.7667 f1:0.7886 SP:0.8316
-
-#DYRK1A test auc:0.8582 mcc:0.5384 accuracy:0.7676 precision:0.8052 recall:0.6889 f1:0.7425 SP:0.8421  
-
-
-
-# BBBP:  test auc:0.6850 mcc:0.1327 accuracy:0.5855 precision:0.5849 recall:0.8692 f1:0.6992 SP:0.2326 
-# bace:  test auc:0.7950 mcc:0.3368 accuracy:0.6259 precision:0.8250 recall:0.4074 f1:0.5455 SP:0.8939
-# HIV    test auc:0.6813 mcc:0.1937 accuracy:0.9690 precision:0.3000 recall:0.1442 f1:0.1948 SP:0.9910
-# clintox 
-# tox21   test auc:0.7519 mcc:0.2667 accuracy:0.8989 precision:0.4611 recall:0.2256 f1:0.2903 SP:0.9711
-# sider   test auc:0.5796 mcc:0.0946 accuracy:0.7437 precision:0.5996 recall:0.7000 f1:0.6413 SP:0.3850 
-# muv
 
 
 
