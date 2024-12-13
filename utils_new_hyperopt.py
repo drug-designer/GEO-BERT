@@ -6,7 +6,6 @@ import openbabel as ob
 from rdkit.Chem import AllChem
 import tensorflow as tf
 
-
 def obsmitosmile(smi):
     conv = ob.OBConversion()
     conv.SetInAndOutFormats("smi", "can")
@@ -17,21 +16,17 @@ def obsmitosmile(smi):
     smile = smile.replace('\t\n', '')
     return smile
 
-
-# 计算键长
 def calculate_bond_length(positions, atom1_idx, atom2_idx):
     pos1 = positions[atom1_idx]
     pos2 = positions[atom2_idx]
-    bond_length = np.linalg.norm(pos1 - pos2)  # 计算欧几里得距离
+    bond_length = np.linalg.norm(pos1 - pos2)  
     return bond_length
 
-
-# 计算键角
 def calculate_bond_angle(positions, atom1_idx, atom2_idx, atom3_idx):
     pos1 = positions[atom1_idx]
     pos2 = positions[atom2_idx]
     pos3 = positions[atom3_idx]
-
+    
     vec1 = pos1 - pos2
     vec2 = pos3 - pos2
 
@@ -46,9 +41,8 @@ def calculate_bond_angle(positions, atom1_idx, atom2_idx, atom3_idx):
     else:
       cos_theta = dot_product / (norm_vec1 * norm_vec2)
 
-      
-    angle_rad = np.arccos(np.clip(cos_theta, -1.0, 1.0))  # 计算夹角的弧度值
-    angle_deg = np.degrees(angle_rad)  # 将弧度转换为角度
+    angle_rad = np.arccos(np.clip(cos_theta, -1.0, 1.0))  
+    angle_deg = np.degrees(angle_rad)  
     if angle_deg > 90:
         angle_deg=180-angle_deg
 
@@ -61,23 +55,20 @@ def add_bond_nodes(adjacency_matrix, molecule):
     num_bond_nodes = molecule.GetNumBonds()
     total_nodes = num_atoms + num_bond_nodes
 
-    # 扩展邻接矩阵，使其边长为原子的总数加上键的总数
     extended_adj_matrix = np.zeros((total_nodes, total_nodes), dtype=float)
 
     extended_adj_matrix[:num_atoms, :num_atoms] = adjacency_matrix
 
-    # 将原子之间的连接关系添加到扩展邻接矩阵
     for bond1 in molecule.GetBonds():
         atom1, atom2 = bond1.GetBeginAtomIdx(), bond1.GetEndAtomIdx()
-        # 将键节点与相应的原子节点连接
+        
         extended_adj_matrix[atom1, num_atoms + bond1.GetIdx()] = 1
         extended_adj_matrix[num_atoms + bond1.GetIdx(), atom1] = 1
         extended_adj_matrix[atom2, num_atoms + bond1.GetIdx()] = 1
         extended_adj_matrix[num_atoms + bond1.GetIdx(), atom2] = 1
-
-        # 检查当前键与其他键是否相连，如果是，则在扩展邻接矩阵中相应位置置1
+  
         for bond2 in molecule.GetBonds():
-            if bond1.GetIdx() != bond2.GetIdx():  # 避免与自身比较
+            if bond1.GetIdx() != bond2.GetIdx():  
                 if bond1.GetBeginAtomIdx() == bond2.GetBeginAtomIdx() or bond1.GetBeginAtomIdx() == bond2.GetEndAtomIdx() or \
                         bond1.GetEndAtomIdx() == bond2.GetBeginAtomIdx() or bond1.GetEndAtomIdx() == bond2.GetEndAtomIdx():
                     extended_adj_matrix[num_atoms + bond1.GetIdx(), num_atoms + bond2.GetIdx()] = 1
@@ -86,8 +77,6 @@ def add_bond_nodes(adjacency_matrix, molecule):
 
     return extended_adj_matrix
 
-
-# 计算相邻键的键长和键角
 def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
     num_atoms = len(positions)
     bond_lengths = []
@@ -97,10 +86,9 @@ def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
 
     #print(extended_adj_matrix)
 
-
     for i in range(num_atoms):
         for j in range(i + 1, num_atoms):
-            if adj_matrix[i, j] == 1:  # 如果原子 i 和原子 j 相邻
+            if adj_matrix[i, j] == 1:  
                 bond_length = calculate_bond_length(positions, i, j)
                 if bond_length != 0:
                   bond_length=1.9/bond_length      
@@ -110,16 +98,13 @@ def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
                 #print(bond_length_rounded)
                 bond_lengths.append(bond_length_rounded)
 
-                # 将键长赋值到 adj_matrix 的对应位置
+                
                 extended_adj_matrix[i, j] = bond_length_rounded
-                extended_adj_matrix[j, i] = bond_length_rounded  # 因为是无向图，所以对称赋值
+                extended_adj_matrix[j, i] = bond_length_rounded  
                 distance_matrix=extended_adj_matrix.copy()
 
                 distance_matrix[num_atoms:, num_atoms:] = 0
-
-
-
-                # 查找第三个原子，使其与 i、j 均相邻，计算键角
+     
                 for k in range(num_atoms):
 
                     if adj_matrix[i, k] == 1 and k != j :
@@ -152,7 +137,6 @@ def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
     return  extended_adj_matrix
 
 
-
 def smiles2adjoin(smiles,explicit_hydrogens=True,canonical_atom_order=False):
 
     mol = Chem.MolFromSmiles(smiles)
@@ -170,7 +154,6 @@ def smiles2adjoin(smiles,explicit_hydrogens=True,canonical_atom_order=False):
         new_order = rdmolfiles.CanonicalRankAtoms(mol)
         mol = rdmolops.RenumberAtoms(mol, new_order)
     num_atoms = mol.GetNumAtoms()
-
 
     atoms_list = []
     bonds_list = []
@@ -196,34 +179,29 @@ def smiles2adjoin(smiles,explicit_hydrogens=True,canonical_atom_order=False):
     atoms_bonds_list=atoms_list+bonds_list
 
     adj_matrix_ethanol = Chem.GetAdjacencyMatrix(mol)
-
-    # 确保成功转换为分子对象
+ 
     if mol is not None:
-        # 创建原始邻接矩阵
+       
         extended_adj_matrix = add_bond_nodes(adj_matrix_ethanol, mol)
 
     
-    # 生成三维坐标
     AllChem.EmbedMolecule(mol)
 
     if mol.GetNumConformers() == 0:
-        # 处理无构象的情况，可能需要添加默认构象
+       
         mol.AddConformer(Chem.Conformer(mol.GetNumAtoms()))
 
-    # 获取三维坐标
+    
     atom_positions = mol.GetConformer().GetPositions()
 
     adj_matrix_ethanol = Chem.GetAdjacencyMatrix(mol)
 
-    # 计算乙醇分子中所有相邻键的键长和键角
+    
     distance_angle_matrix = calculate_all_bond_lengths_and_angles(atom_positions, adj_matrix_ethanol, mol)
 
 
     #return atoms_list,bonds_list,atoms_bonds_list,extended_adj_matrix,distance_matrix,angle_matrix
     
     return atoms_bonds_list,extended_adj_matrix,distance_angle_matrix
-
-    
-    
 
     #return atoms_bonds_list,extended_adj_matrix
