@@ -3,7 +3,7 @@
 ## Environmental Installation
 
 ```bash
-conda create -n GEO-BERT python==3.7
+**conda create -n GEO-BERT python==3.7**
 conda install -c openbabel openbabel
 pip install tensorflow==2.3
 pip install rdkit
