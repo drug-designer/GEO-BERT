@@ -60,5 +60,5 @@ DYRK1A.csv
 python Class_hyperopt_DYRK1A.py
 
 ## Acknowledgments
-This code is partially built based on MG-BERT and FG-BERT. Thank you very much for their open-source code!
 
+This code is partially built on MG-BERT and FG-BERT. We are deeply grateful for their open-source code contributions.
