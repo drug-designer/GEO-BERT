@@ -44,9 +44,7 @@ def count_parameters(model):
 
 def main(seed, args):
 
-    # tasks = ['BBBP', 'bace', 'HIV','clintox', 'tox21', 'muv', 'sider','toxcast_data']
-
-    task = 'BBBP'
+    task = 'clintox'
 
     elif task =='BBBP':
         label = ['p_np']
