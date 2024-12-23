@@ -2,8 +2,7 @@ import sklearn
 import tensorflow as tf
 import tensorflow.keras as keras
 import numpy as np
-from dataset_new_DYRK1A import Graph_Classification_Dataset
-#from dataset_scaffold_random import Graph_Classification_Dataset
+from dataset_scaffold_random import Graph_Classification_Dataset
 import os
 from model_new_hyperopt import PredictModel, BertModel
 from sklearn.metrics import roc_auc_score, precision_score, recall_score, matthews_corrcoef, f1_score
@@ -47,7 +46,7 @@ def main(seed, args):
 
     # tasks = ['BBBP', 'bace', 'HIV','clintox', 'tox21', 'muv', 'sider','toxcast_data']
 
-    task = 'DYRK1A_IC50_all'
+    task = 'BBBP'
 
     if task == 'DYRK1A_IC50_all':
         label = ['Label']
@@ -84,7 +83,7 @@ def main(seed, args):
 
    
 
-    arch = {'name': 'Medium', 'path': '8wan_medium_weights_new1_4'}  
+    arch = {'name': 'Medium', 'path': 'medium_weights'}  
     pretraining = True
     pretraining_str = 'pretraining' if pretraining else ''
     trained_epoch = 1
@@ -100,18 +99,11 @@ def main(seed, args):
     batch_size = args['batch_size']
     seed = seed
     np.random.seed(seed=seed)
-    tf.random.set_seed(seed=seed)
-
-     
-    train_dataset, test_dataset , val_dataset = Graph_Classification_Dataset('data/DYRK1A/DYRK1A_IC50_train.csv', 
-                                                                             'data/DYRK1A/DYRK1A_IC50_test.csv',
-                                                                             smiles_field='SMILES',
-                                                               label_field='Type(active or not)',addH=True).get_data()  
-    """
+    tf.random.set_seed(seed=seed) 
 
     train_dataset, test_dataset, val_dataset = Graph_Classification_Dataset('data/clf/BBBP.csv', smiles_field='smiles',
                                                            label_field=label, seed=seed,batch_size=batch_size,a = len(label), addH=True).get_data()  #源代码 label_field=label
-    """                                                 
+                                                    
     x, adjoin_matrix, distance_angle_matrix,y = next(iter(train_dataset.take(1)))
     seq = tf.cast(tf.math.equal(x, 0), tf.float32)
     mask = seq[:, tf.newaxis, tf.newaxis, :]
