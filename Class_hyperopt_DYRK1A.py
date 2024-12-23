@@ -47,7 +47,7 @@ def main(seed, args):
 
     # tasks = ['BBBP', 'bace', 'HIV','clintox', 'tox21', 'muv', 'sider','toxcast_data']
 
-    task = 'toxcast_data'
+    task = 'BBBP'
 
     if task == 'DYRK1A_IC50_all':
         label = ['Label']
@@ -102,14 +102,8 @@ def main(seed, args):
     np.random.seed(seed=seed)
     tf.random.set_seed(seed=seed)
 
-    """
-    train_dataset, test_dataset , val_dataset = Graph_Classification_Dataset('data/DYRK1A/DYRK1A_IC50_train.csv', 
-                                                                             'data/DYRK1A/DYRK1A_IC50_test.csv',
-                                                                             smiles_field='SMILES',
-                                                               label_field='Type(active or not)',addH=True).get_data()  
-    """
 
-    train_dataset, test_dataset, val_dataset = Graph_Classification_Dataset('data/clf/toxcast_data.csv', smiles_field='smiles',
+    train_dataset, test_dataset, val_dataset = Graph_Classification_Dataset('data/clf/BBBP.csv', smiles_field='smiles',
                                                            label_field=label, seed=seed,batch_size=batch_size,a = len(label), addH=True).get_data()  #源代码 label_field=label
                                                         
     x, adjoin_matrix, distance_angle_matrix,y = next(iter(train_dataset.take(1)))
