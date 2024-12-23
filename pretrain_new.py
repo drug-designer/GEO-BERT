@@ -1,5 +1,5 @@
 import tensorflow as tf
-from model_new import  BertModel
+from model_new_hyperopt import  BertModel
 from dataset_new import Graph_Bert_Dataset
 import time
 import os
