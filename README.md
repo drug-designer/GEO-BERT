@@ -23,6 +23,8 @@ For other packages, users may install the latest version.
 
 ## Folders
 
+A brief introduction to each code file:
+
 1. conformer_select: incuding codes for processing pre-training datasets.
 
 2. pretrain_new: incuding codes for GEO-BERT pre-training tasks.
@@ -41,7 +43,7 @@ For other packages, users may install the latest version.
 
 9. data: the public dataset and DYRK1A dataset for finetuing.
 
-## Case study with GEO-BERT
+## Use example of GEO-BERT
 
 ### Prepare for datasets and model weights
 
