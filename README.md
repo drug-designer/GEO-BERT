@@ -23,9 +23,19 @@ For other packages, users may install the latest version.
 
 ## Folders
 
+conformer_select: incuding codes for processing pre-training datasets.
+
 pretrain_new: incuding codes for GEO-BERT pre-training tasks.
 
-dataset-scoffold_random: incuding codes for datasets for pre-training and fine-tuning.
+dataset_new: incuding codes for datasets for pre-training tasks.
+
+dataset_scoffold_random: incuding codes for datasets for fine-tuning on public datasets.
+
+dataset_new_DYRK1A: incuding codes for datasets for fine-tuning on DYRK1A datasets.
+
+Class_hyperopt: incuding codes for GEO-BERT fine-tuning on public datasets.
+
+Class_hyperopt_DYRK1A: incuding codes for GEO-BERT fine-tuning on DYRK1A datasets.
 
 utilis_new-hyperop: incuding codes for converting molecules to three-dimensional conformations and calculating bond lengths and bond angles.
 
