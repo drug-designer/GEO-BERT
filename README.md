@@ -15,9 +15,9 @@ pip install tensorflow==2.3
 pip install rdkit
 pip install numpy
 pip install pandas
-pip install matplotlib
-pip install hyperopt
-pip install scikit-learn
+conda install conda-forge::matplotlib
+conda install conda-forge::hyperopt
+conda install conda-forge::scikit-learn
 For other packages, users may install the latest version.
 ```
 
