@@ -6,7 +6,7 @@ Virtual screening is widely acknowledged to accelerate early-stage drug discover
 ![image](https://github.com/user-attachments/assets/1620b1e7-0ba2-4dbf-9190-2f93f128a512)
 
 
-## Environmental Installation
+## Configure Environmnent
 
 ```bash
 conda create -n GEO-BERT python==3.7
@@ -18,22 +18,22 @@ pip install pandas
 pip install matplotlib
 pip install hyperopt
 pip install scikit-learn
-Other packages can be installed using the latest version.
+For other packages, users may install the latest version.
 ```
 
-## Folder Structure
+## Folders
 
-pretrain_new: contains code for GEO-BERT pre training tasks.
+pretrain_new: incuding codes for GEO-BERT pre-training tasks.
 
-dataset-scoffold_random: contains code for building datasets for pre training and fine-tuning.
+dataset-scoffold_random: incuding codes for datasets for pre-training and fine-tuning.
 
-utilis_new-hyperop: contains code for converting molecules into three-dimensional structures and calculating bond lengths and bond angles.
+utilis_new-hyperop: incuding codes for converting molecules to three-dimensional conformations and calculating bond lengths and bond angles.
 
-data: contains the dataset for each downstream task.
+data: the dataset for finetuing.
 
-## Example of using GEO-BERT
+## Case study with GEO-BERT
 
-### Example of pre-training
+### Pre-training
 
 Required files:
 
@@ -49,7 +49,7 @@ data.txt
 
 python pretrain.py
 
-### Example of fine-tuning
+### Fine-tuning
 
 Required files for DYRK1A dataset:
 
@@ -67,4 +67,4 @@ python Class_hyperopt_DYRK1A.py
 
 ## Acknowledgments
 
-This code is partially built on MG-BERT and FG-BERT. We are deeply grateful for their open-source code contributions.
+This program is partially built on MG-BERT and FG-BERT. We are deeply grateful for their open-source codes.
