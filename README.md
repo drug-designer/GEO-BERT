@@ -6,7 +6,7 @@ Virtual screening is widely acknowledged to accelerate early-stage drug discover
 ![image](https://github.com/user-attachments/assets/1620b1e7-0ba2-4dbf-9190-2f93f128a512)
 
 
-## Configure Environmnent
+## Installation
 
 ```bash
 conda create -n GEO-BERT python==3.7
