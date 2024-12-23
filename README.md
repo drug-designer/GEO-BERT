@@ -39,7 +39,7 @@ Class_hyperopt_DYRK1A: incuding codes for GEO-BERT fine-tuning on DYRK1A dataset
 
 utilis_new-hyperop: incuding codes for converting molecules to three-dimensional conformations and calculating bond lengths and bond angles.
 
-data: the dataset for finetuing.
+data: the public dataset and DYRK1A dataset for finetuing.
 
 ## Case study with GEO-BERT
 
