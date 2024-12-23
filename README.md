@@ -23,45 +23,45 @@ For other packages, users may install the latest version.
 
 ## Folders
 
-1.conformer_select: incuding codes for processing pre-training datasets.
+1. conformer_select: incuding codes for processing pre-training datasets.
 
-2.pretrain_new: incuding codes for GEO-BERT pre-training tasks.
+2. pretrain_new: incuding codes for GEO-BERT pre-training tasks.
 
-3.dataset_new: incuding codes for datasets for pre-training tasks.
+3. dataset_new: incuding codes for datasets for pre-training tasks.
 
-4.dataset_scoffold_random: incuding codes for datasets for fine-tuning on public datasets.
+4. dataset_scoffold_random: incuding codes for datasets for fine-tuning on public datasets.
 
-5.dataset_new_DYRK1A: incuding codes for datasets for fine-tuning on DYRK1A datasets.
+5. dataset_new_DYRK1A: incuding codes for datasets for fine-tuning on DYRK1A datasets.
 
-6.Class_hyperopt: incuding codes for GEO-BERT fine-tuning on public datasets.
+6. Class_hyperopt: incuding codes for GEO-BERT fine-tuning on public datasets.
 
-7.Class_hyperopt_DYRK1A: incuding codes for GEO-BERT fine-tuning on DYRK1A datasets.
+7. Class_hyperopt_DYRK1A: incuding codes for GEO-BERT fine-tuning on DYRK1A datasets.
 
-8.utilis_new-hyperop: incuding codes for converting molecules to three-dimensional conformations and calculating bond lengths and bond angles.
+8. utilis_new-hyperop: incuding codes for converting molecules to three-dimensional conformations and calculating bond lengths and bond angles.
 
-9.data: the public dataset and DYRK1A dataset for finetuing.
+9. data: the public dataset and DYRK1A dataset for finetuing.
 
 ## Case study with GEO-BERT
 
 ### Prepare for datasets and model weights
 
-1.First, use the command "cd GEO-BERT" to enter the current path of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "Medium/bert_weights_encoded Medium_1. h5".
+1. First, use the command "cd GEO-BERT" to enter the current path of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "Medium/bert_weights_encoded Medium_1. h5".
 
-2.Secondly, use the command "cd data" to enter the path of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets into "data/clf/...".
+2. Secondly, use the command "cd data" to enter the path of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets into "data/clf/...".
 
 ### Pre-training
 
 Required files:
 
-1.utils_new_hyperopt.py
+1. utils_new_hyperopt.py
 
-2.model_new_hyperopt.py
+2. model_new_hyperopt.py
 
-3.dataset_new.py
+3. dataset_new.py
 
-4.pretrain_new.py
+4. pretrain_new.py
 
-5.data/chembl_conformer_select_145wan.txt
+5. data/chembl_conformer_select_145wan.txt
 
 Use the command "python pretrain_new.py" to pre-train for GEO-BERT.
 
@@ -69,15 +69,15 @@ Use the command "python pretrain_new.py" to pre-train for GEO-BERT.
 
 Required files for BBBP dataset:
 
-1.utils_new_hyperopt.py
+1. utils_new_hyperopt.py
 
-2.model_new_hyperopt.py
+2. model_new_hyperopt.py
 
-3.dataset_scaffold_random.py
+3. dataset_scaffold_random.py
 
-4.Class_hyperopt.py
+4. Class_hyperopt.py
 
-5.data/clf/BBBP.csv
+5. data/clf/BBBP.csv
 
 Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public datasets.
 
@@ -85,15 +85,15 @@ Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public d
 
 Required files for DYRK1A dataset:
 
-1.utils_new_hyperopt.py
+1. utils_new_hyperopt.py
 
-2.model_new_hyperopt.py
+2. model_new_hyperopt.py
 
-3.dataset_new_DYRK1A.py
+3. dataset_new_DYRK1A.py
 
-4.Class_hyperopt_DYRK1A.py
+4. Class_hyperopt_DYRK1A.py
 
-5.data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
+5. data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
 
 Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
