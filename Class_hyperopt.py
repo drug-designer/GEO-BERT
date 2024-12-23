@@ -48,10 +48,7 @@ def main(seed, args):
 
     task = 'BBBP'
 
-    if task == 'DYRK1A_IC50_all':
-        label = ['Label']
-
-    elif task =='BBBP':
+    if task =='BBBP':
         label = ['p_np']
 
     elif task =='bace':
