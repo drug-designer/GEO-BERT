@@ -43,7 +43,9 @@ def count_parameters(model):
     return total_params
 
 def main(seed, args):
-
+    
+    # tasks = ['BBBP', 'bace', 'HIV','clintox', 'tox21', 'muv', 'sider','toxcast_data']
+    
     task = 'clintox'
 
     elif task =='BBBP':
