@@ -381,7 +381,7 @@ def hy_main(args):
     test_auc_list = []
     test_all_auc_list = []
     x = 0
-    for seed in [0]:  #[0,1,2,3,4,5,6,7,8,9]
+    for seed in [0,1,2,3,4,5,6,7,8,9]:
         print(seed)
         auc, test_auc, a_list= main(seed, args)
         auc_list.append(auc)
