@@ -61,8 +61,6 @@ class Graph_Bert_Dataset(object):
         #print(smiles)
 
         atoms_bonds_list, adjoin_matrix,distance_angle_matrix = smiles2adjoin(smiles,explicit_hydrogens=self.addH)
-        distance_angle_matrix=np.zeros((len(atoms_bonds_list),len(atoms_bonds_list)))
-
         atoms_bonds_list = ['<global>'] + atoms_bonds_list
         nums_list =  [str2num.get(i,str2num['<unk>']) for i in atoms_bonds_list]  
         #print(nums_list)
