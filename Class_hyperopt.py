@@ -262,6 +262,8 @@ def main(seed, args):
             stopping_monitor = 0
             np.save('{}/{}{}{}{}{}'.format(arch['path'], task, seed, arch['name'], trained_epoch, trained_epoch, pretraining_str),
                     [y_true, y_preds])
+            if not os.path.exists('classification_weights'):
+                os.makedirs('classification_weights')
             model.save_weights('classification_weights/{}_{}.h5'.format(task, seed))
             print('save model weights')
         else:
