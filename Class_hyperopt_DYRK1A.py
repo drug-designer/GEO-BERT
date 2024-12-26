@@ -48,7 +48,7 @@ def main(seed, args):
     
     task = 'clintox'
 
-    elif task =='BBBP':
+    if task =='BBBP':
         label = ['p_np']
 
     elif task =='bace':
