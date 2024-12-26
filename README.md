@@ -10,6 +10,7 @@ Virtual screening is widely acknowledged to accelerate early-stage drug discover
 
 ```bash
 conda create -n GEO-BERT python==3.7
+conda activate GEO-BERT
 conda install -c openbabel openbabel
 pip install tensorflow==2.3
 pip install rdkit
