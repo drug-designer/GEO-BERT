@@ -23,7 +23,7 @@ For other packages, users may install the latest version.
 
 ## Folders
 
-A brief introduction to each code file:
+A brief introduction to each python file:
 
 1. conformer_select: incuding codes for processing pre-training datasets.
 
@@ -47,9 +47,9 @@ A brief introduction to each code file:
 
 ### Prepare for datasets and model weights
 
-1. First, use the command "cd GEO-BERT" to enter the current path of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "Medium/bert_weights_encoded Medium_1. h5".
+1. First, use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "Medium/bert_weights_encoded Medium_1.h5".
 
-2. Secondly, use the command "cd data" to enter the path of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets into "data/clf/...".
+2. Second, use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets in "data/clf/...".
 
 ### Pre-training
 
