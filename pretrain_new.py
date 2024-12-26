@@ -31,7 +31,7 @@ optimizer = tf.keras.optimizers.Adam(1e-4)
 
 small = {'name': 'Small', 'num_layers': 3, 'num_heads': 4, 'd_model': 128, 'path': 'small_weights','addH':True}
 medium = {'name': 'Medium', 'num_layers': 6, 'num_heads': 8, 'd_model': 256, 'path': 'medium_weights','addH':True}
-medium3 = {'name': 'Medium', 'num_layers': 6, 'num_heads': 4, 'd_model': 256, 'path': '8wan_medium_weights_new1_4','addH':True}
+medium3 = {'name': 'Medium', 'num_layers': 6, 'num_heads': 4, 'd_model': 256, 'path': 'medium_weights','addH':True}
 large = {'name': 'Large', 'num_layers': 12, 'num_heads': 12, 'd_model': 576, 'path': 'large_weights','addH':True}
 medium_balanced = {'name':'Medium','num_layers': 6, 'num_heads': 8, 'd_model': 256,'path':'weights_balanced','addH':True}
 medium_without_H = {'name':'Medium','num_layers': 6, 'num_heads': 8, 'd_model': 256,'path':'weights_without_H','addH':False}
@@ -71,11 +71,6 @@ def train_step(x, adjoin_matrix,y, char_weight,distance_angle_matrix,epoch):
 
     with tf.GradientTape() as tape:
 
-        temp = model(x, mask=mask, training=True, adjoin_matrix=adjoin_matrix,distance_angle_matrix=distance_angle_matrix)
-        if epoch==0 and batch==0:
-            model.load_weights('8wan_medium_weights_new1_4/bert_weightsMedium_4.h5') 
-            print('load successful')
-
         predictions = model(x,adjoin_matrix=adjoin_matrix,mask=mask,training=True,distance_angle_matrix=distance_angle_matrix)    
         loss = loss_function(y,predictions,sample_weight=char_weight)
         gradients = tape.gradient(loss, model.trainable_variables)
@@ -110,7 +105,7 @@ for epoch in range(19):
 
         if batch % 15 == 0:    #500
             print('Epoch {} Batch {} Loss {:.4f}'.format(
-                epoch + 5, batch, train_loss.result()))
+                epoch, batch, train_loss.result()))
             print('Accuracy: {:.4f}'.format(train_accuracy.result()))
             #
             # for x, adjoin_matrix ,y , char_weight in test_dataset:
@@ -121,10 +116,10 @@ for epoch in range(19):
             #for i, w in enumerate(model.weights):
               #print(i, w.name)
 
-    model.save_weights(arch['path'] + '/bert_weights{}_{}.h5'.format(arch['name'], epoch + 5))
+    model.save_weights(arch['path'] + '/bert_weights{}_{}.h5'.format(arch['name'], epoch))
 
-    print(arch['path'] + '/bert_weights{}_{}.h5'.format(arch['name'], epoch+5))
-    print('Epoch {} Loss {:.4f}'.format(epoch + 5, train_loss.result()))
+    print(arch['path'] + '/bert_weights{}_{}.h5'.format(arch['name'], epoch))
+    print('Epoch {} Loss {:.4f}'.format(epoch, train_loss.result()))
     print('Time taken for 1 epoch: {} secs\n'.format(time.time() - start))
     print('Accuracy: {:.4f}'.format(train_accuracy.result()))
     print('Saving checkpoint')
