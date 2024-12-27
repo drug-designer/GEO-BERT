@@ -54,51 +54,27 @@ A brief introduction to each python file:
 
 * Pre-training
 
-Required files:
-
-1. utils_new_hyperopt.py
-
-2. model_new_hyperopt.py
-
-3. dataset_new.py
-
-4. pretrain_new.py
-
-5. data/chembl_conformer_select_145wan.txt
-
-Use the command "python pretrain_new.py" to pre-train for GEO-BERT.
+1. Required files:
+   
+  utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
+   
+2. use the command "python pretrain_new.py" to pre-train for GEO-BERT.
 
 * Fine-tuning for public datasets.
------------------------------------
-Required files for BBBP dataset:
 
-1. utils_new_hyperopt.py
+1. Required files for BBBP dataset:
 
-2. model_new_hyperopt.py
+   utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py,data/clf/BBBP.csv
 
-3. dataset_scaffold_random.py
-
-4. Class_hyperopt.py
-
-5. data/clf/BBBP.csv
-
-Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public datasets.
+2. Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public datasets.
 
 * Fine-tuning for DYRK1A dataset.
------------------------------------
-Required files for DYRK1A dataset:
 
-1. utils_new_hyperopt.py
+1. Required files for DYRK1A dataset:
 
-2. model_new_hyperopt.py
+   utils_new_hyperopt.py,model_new_hyperopt.py,dataset_new_DYRK1A.py, Class_hyperopt_DYRK1A.py, data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
 
-3. dataset_new_DYRK1A.py
-
-4. Class_hyperopt_DYRK1A.py
-
-5. data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
-
-Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
+2. Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
 ## Acknowledgments
 -----------------------------------
