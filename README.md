@@ -49,35 +49,35 @@ A brief introduction to each python file:
 
 ## Use example of GEO-BERT
 -----------------------------------
-* Prepare for datasets and model weights
+1. Prepare for datasets and model weights
 
-1. First, use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "medium_weights/bert_weights_encoded Medium_1.h5".
+* First, use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "medium_weights/bert_weights_encoded Medium_1.h5".
 
-2. Second, use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets in "data/clf/...".
+* Second, use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets in "data/clf/...".
 
-* Pre-training
+2. Pre-training
 
-1. Required files:
+* Required files:
 
    utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
    
-3. use the command "python pretrain_new.py" to pre-train for GEO-BERT.
+* use the command "python pretrain_new.py" to pre-train for GEO-BERT.
 
-* Fine-tuning for public datasets.
+3. Fine-tuning for public datasets.
 
-1. Required files for BBBP dataset:
+* Required files for BBBP dataset:
 
    utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py,data/clf/BBBP.csv
 
-2. Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public datasets.
+* Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public datasets.
 
-* Fine-tuning for DYRK1A dataset.
+4. Fine-tuning for DYRK1A dataset.
 
-1. Required files for DYRK1A dataset:
+* Required files for DYRK1A dataset:
 
    utils_new_hyperopt.py,model_new_hyperopt.py,dataset_new_DYRK1A.py, Class_hyperopt_DYRK1A.py, data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
 
-2. Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
+* Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
 ## Acknowledgments
 -----------------------------------
