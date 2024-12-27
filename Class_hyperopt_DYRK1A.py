@@ -46,7 +46,7 @@ def main(seed, args):
     
     # tasks = ['BBBP', 'bace', 'HIV','clintox', 'tox21', 'muv', 'sider','toxcast_data']
     
-    task = 'clintox'
+    task = 'BBBP'
 
     if task =='BBBP':
         label = ['p_np']
@@ -98,8 +98,8 @@ def main(seed, args):
     np.random.seed(seed=seed)
     tf.random.set_seed(seed=seed)
 
-    train_dataset, test_dataset , val_dataset = Graph_Classification_Dataset('data/DYRK1A/DYRK1A_IC50_train.csv', 
-                                                                             'data/DYRK1A/DYRK1A_IC50_test.csv',
+    train_dataset, test_dataset , val_dataset = Graph_Classification_Dataset('data/clf/DYRK1A_IC50_train.csv', 
+                                                                             'data/clf/DYRK1A_IC50_test.csv',
                                                                              smiles_field='SMILES',
                                                                label_field='Type(active or not)',addH=True).get_data()  
     
