@@ -11,7 +11,6 @@ Virtual screening is widely acknowledged to accelerate early-stage drug discover
 ```bash
 conda create -n GEO-BERT python==3.7
 conda activate GEO-BERT
-pip install tensorflow==2.3
 conda install -c openbabel openbabel
 pip install rdkit
 pip install numpy
@@ -19,6 +18,10 @@ pip install pandas
 conda install conda-forge/label/rc::matplotlib
 conda install conda-forge::hyperopt
 conda install conda-forge::scikit-learn
+pip install tensorflow-gpu==2.6.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install tensorflow==2.6.0
+pip install keras==2.6
+
 For other packages, users may install the latest version.
 ```
 
