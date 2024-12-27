@@ -58,10 +58,10 @@ A brief introduction to each python file:
 * Pre-training
 
 1. Required files:
+
+   utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
    
-  utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
-   
-2. use the command "python pretrain_new.py" to pre-train for GEO-BERT.
+3. use the command "python pretrain_new.py" to pre-train for GEO-BERT.
 
 * Fine-tuning for public datasets.
 
