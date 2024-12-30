@@ -79,7 +79,7 @@ A brief introduction to each python file:
 
 * Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
-## Application of GEO-BERT
+## Application example of GEO-BERT
 -----------------------------------
 1. Prepare for model weights.
 
