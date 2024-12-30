@@ -2,7 +2,7 @@ import sklearn
 import tensorflow as tf
 import tensorflow.keras as keras
 import numpy as np
-from dataset_new_DYRK1A_screen_github import Graph_Classification_Dataset
+from dataset_new_DYRK1A_screen import Graph_Classification_Dataset
 import os
 from model_new_hyperopt import PredictModel, BertModel
 from sklearn.metrics import roc_auc_score, precision_score, recall_score, matthews_corrcoef, f1_score
