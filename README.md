@@ -81,7 +81,7 @@ A brief introduction to each python file:
 
 ## Application of GEO-BERT
 -----------------------------------
-1. Prepare for datasets and model weights
+1. Prepare for model weights
 
 * Use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip model_weights_DYRK1A.zip" to decompress the weight file with the file structure of "model_weights_DYRK1A.h5".
   
