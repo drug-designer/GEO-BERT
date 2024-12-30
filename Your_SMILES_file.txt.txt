@@ -1,6 +1,0 @@
-SMILES
-COc1ccc(-c2ccc3ncnc(NCc4cccs4)c3c2)cc1
-c1nc(NCC2CCCC2)c2cc(-c3ccc4c(c3)OCO4)ccc2n1
-CN(Cc1ccco1)c1ncnc2ccc(-c3ccc4c(c3)OCO4)cc12
-Cn1ccc2cc(-c3ccc4ncnc(NCc5cccs5)c4c3)ccc21
-Cc1nnc(CN(C)c2ncnc3ccc(-c4ccc5c(c4)OCO5)cc23)o1
