@@ -81,11 +81,11 @@ A brief introduction to each python file:
 
 ## Application of GEO-BERT
 -----------------------------------
-1. Prepare for model weights
+1. Prepare for model weights.
 
 * Use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip model_weights_DYRK1A.zip" to decompress the weight file with the file structure of "model_weights_DYRK1A.h5".
   
-2. Start predicting
+2. Start predicting.
 
 * Use the command " python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt" "
 
