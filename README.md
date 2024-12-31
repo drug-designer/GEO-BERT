@@ -55,7 +55,7 @@ A brief introduction to each python file:
    
 2. If necessary, users could train a new pre-trained GEO-BERT model, with the following files and the command:
 
-   * File: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
+   * File: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt ($cd "data"; $unzip pretrain_datasets.zip)
    
    * Command: use the command "python pretrain_new.py" to perform pre-training.
 
@@ -66,15 +66,23 @@ Here, we provide several cases of study to deomonstrate fine-tuning with dataset
 
 1. Prepare for datasets and model weights
 
-* use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium.zip" to decompress the weights file with the file structure of "bert_weightsMedium_1.h5".
+* $ cd GEO-BERT" # enter the directory of GEO-BERT
 
-* use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the finetuning datasets. Put the datasets in the directory of "data/clf/...(e.g. BBBP.csv)".
+* $ unzip Medium.zip # get model weights file "bert_weightsMedium_1.h5"
+
+* $ cd data
+
+* $ unzip datasets.zip
+
+* $ mkdir clf
+
+* $ mv -f BBBP.csv ./clf
 
 2. Start Fine-tuning (e.g. BBBP property): 
 
 * Required files for BBBP fine-tuning: utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py, data/clf/BBBP.csv
 
-* Use the command "python Class_hyperopt.py" to perform fine-tuning for GEO-BERT.
+* $ python Class_hyperopt.py # perform fine-tuning for GEO-BERT.
 
 
 ## Fine-tuing of GEO-BERT for DYRK1A activity prediction (Real-world Drug Discovery Practice, Please follow) 
