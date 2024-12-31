@@ -51,7 +51,7 @@ A brief introduction to each python file:
 -----------------------------------
 1. Here, we have provided one pre-trained model based on 1M drug-like molecules from ChEMBL . We discourage users from pre-training new models with the same parameters and the same molecular data.
 
-   * Get into the current direcotry of GEO-BERT with the command of "cd GEO-BERT", and then unzip the compressed file with "unzip Medium.zip" to obtain the weights file of the pre-trained GEO-BERT model, i.e.,"bert_weightsMedium_1.h5".
+   * Get into the current direcotry of GEO-BERT with the command of "cd GEO-BERT", and then unzip the compressed file with "unzip Medium.zip -d medium_weights" to obtain the weights file of the pre-trained GEO-BERT model, i.e.,"bert_weightsMedium_1.h5".
    
 2. If necessary, users could train a new pre-trained GEO-BERT model, with the following files and the command:
 
@@ -68,7 +68,7 @@ Here, we provide several cases of study to deomonstrate fine-tuning with dataset
 
 * $ cd GEO-BERT" # enter the directory of GEO-BERT
 
-* $ unzip Medium.zip # get model weights file "bert_weightsMedium_1.h5"
+* $ unzip Medium.zip -d medium_weights # get model weights file "bert_weightsMedium_1.h5"
 
 * $ cd data
 
