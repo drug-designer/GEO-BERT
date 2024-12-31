@@ -99,6 +99,8 @@ def main(seed, input_path, output_path):
     # Add predictions to the DataFrame
     df['prediction'] = predictions_binary
 
+    df['probability'] = np.concatenate(predictions) 
+
     # Save new txt
     df.to_csv(output_path, index=False)
 
