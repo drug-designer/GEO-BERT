@@ -53,7 +53,7 @@ A brief introduction to each python file:
 
    * Get into the current direcotry of GEO-BERT with the command of "cd GEO-BERT", and then unzip the compressed file with "unzip Medium.zip" to obtain the weights file of the pre-trained GEO-BERT model, i.e.,"bert_weightsMedium_1.h5".
    
-3. IF users are interested in training a new pre-trained GEO-BERT model.
+3. If users are interested in training a new pre-trained GEO-BERT model.
 
    * The following files are required: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
    
