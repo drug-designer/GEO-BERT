@@ -82,6 +82,8 @@ Here, we provide several cases of study to deomonstrate fine-tuning with dataset
 
 * Required files for BBBP fine-tuning: utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py, data/clf/BBBP.csv
 
+* $ cd GEO-BERT" # enter the directory of GEO-BERT
+
 * $ python Class_hyperopt.py # perform fine-tuning for GEO-BERT.
 
 
