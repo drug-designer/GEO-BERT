@@ -53,46 +53,47 @@ A brief introduction to each python file:
 
    * Get into the current direcotry of GEO-BERT with the command of "cd GEO-BERT", and then unzip the compressed file with "unzip Medium.zip" to obtain the weights file of the pre-trained GEO-BERT model, i.e.,"bert_weightsMedium_1.h5".
    
-3. If users are interested in training a new pre-trained GEO-BERT model.
+2. If necessary, users could train a new pre-trained GEO-BERT model, with the following files and the command:
 
-   * The following files are required: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
+   * File: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
    
-   * use the command "python pretrain_new.py" to perform pre-training.
+   * Command: use the command "python pretrain_new.py" to perform pre-training.
 
 
 ## Fine-tuing of GEO-BERT 
 -----------------------------------
+Here, we provide several cases of study to deomonstrate fine-tuning with dataset of a domain knowledge, e.g. BBB penetration.  
+
 1. Prepare for datasets and model weights
 
-* First, use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "bert_weightsMedium_1.h5".
+* use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium.zip" to decompress the weights file with the file structure of "bert_weightsMedium_1.h5".
 
-* Second, use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets in "data/clf/...".
-We provide two cases to demonstrate fine-tuning for DYRK1A acvivity prediction
+* use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the finetuning datasets. Put the datasets in the directory of "data/clf/...(e.g. BBBP.csv)".
 
-1. Fine-tuning for public datasets.
+2. Start Fine-tuning (e.g. BBBP property): 
 
-* Required files for BBBP dataset:
+* Required files for BBBP fine-tuning: utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py, data/clf/BBBP.csv
 
-   utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py,data/clf/BBBP.csv
+* Use the command "python Class_hyperopt.py" to perform fine-tuning for GEO-BERT.
 
-* Use the command "python Class_hyperopt.py" to fine-tune for GEO-BERT on public datasets.
 
-4. Fine-tuning for DYRK1A dataset.
+## Real-world Drug Discovery Practice: Fine-tuing of GEO-BERT for DYRK1A activity prediction
+-----------------------------------
 
-* Required files for DYRK1A dataset:
+In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) and use it to faciliate virtual screening for DYRK1A inhibitor. To this end, 
 
-   utils_new_hyperopt.py,model_new_hyperopt.py,dataset_new_DYRK1A.py, Class_hyperopt_DYRK1A.py, data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
+* Required files for DYRK1A fine-tuning: utils_new_hyperopt.py,model_new_hyperopt.py, dataset_new_DYRK1A.py, Class_hyperopt_DYRK1A.py, data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
 
 * Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
-## Application of GEO-BERT(DYRK1A)
+## Use GEO-BERT(DYRK1A) to screen chemical library
 -----------------------------------
-1. Prepare weights of the fine-tuned model GEO-BERT(DYRK1A) .
+1. Prepare weights of the fine-tuned model GEO-BERT(DYRK1A).
 
 * Enter the current direcotry of GEO-BERT with the command of "cd GEO-BERT";
 * unzip the compressed file with the command of "unzip model_weights_DYRK1A.zip" to obtain the file of "model_weights_DYRK1A.h5".
   
-2. Start bioactivity/property prediction.
+2. Start bioactivity prediction.
 
 * execute the command with " python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt" "
 
