@@ -45,7 +45,7 @@ A brief introduction to each python file:
 
 8. utilis_new-hyperop: incuding codes for converting molecules to three-dimensional conformations and calculating bond lengths and bond angles.
 
-9. data: the public dataset and DYRK1A dataset for finetuing.
+9. data: the public dataset and DYRK1A dataset for finetuning.
 
 ## Pre-training of GEO-BERT (NOT Required)
 -----------------------------------
