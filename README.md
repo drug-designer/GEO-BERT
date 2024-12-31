@@ -55,9 +55,7 @@ A brief introduction to each python file:
    
 3. IF users are interested in training a new pre-trained GEO-BERT model.
 
-   *The following files are required: 
-
-   utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
+   * The following files are required: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
    
    * use the command "python pretrain_new.py" to perform pre-training.
 
