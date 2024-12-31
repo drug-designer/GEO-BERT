@@ -91,7 +91,7 @@ In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) 
 1. Prepare weights of the fine-tuned model GEO-BERT(DYRK1A).
 
 * Enter the current direcotry of GEO-BERT with the command of "cd GEO-BERT";
-* unzip the compressed file with the command of "unzip model_weights_DYRK1A.zip" to obtain the file of "model_weights_DYRK1A.h5".
+* unzip the compressed file with the command of "unzip model_weights_DYRK1A.zip -d ./model_weights_DYRK1A" to obtain the file of "model_weights_DYRK1A.h5".
   
 2. Start bioactivity prediction.
 
