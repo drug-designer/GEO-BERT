@@ -60,7 +60,7 @@ A brief introduction to each python file:
    * Command: use the command "python pretrain_new.py" to perform pre-training.
 
 
-## Fine-tuing of GEO-BERT 
+## Fine-tuing of GEO-BERT (DEMO)
 -----------------------------------
 Here, we provide several cases of study to deomonstrate fine-tuning with dataset of a domain knowledge, e.g. BBB penetration.  
 
@@ -77,7 +77,7 @@ Here, we provide several cases of study to deomonstrate fine-tuning with dataset
 * Use the command "python Class_hyperopt.py" to perform fine-tuning for GEO-BERT.
 
 
-## Real-world Drug Discovery Practice: Fine-tuing of GEO-BERT for DYRK1A activity prediction
+## Fine-tuing of GEO-BERT for DYRK1A activity prediction (Real-world Drug Discovery Practice, Please follow) 
 -----------------------------------
 
 In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) and use it to faciliate virtual screening for DYRK1A inhibitor. To this end, 
@@ -86,7 +86,7 @@ In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) 
 
 * Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
-## Use GEO-BERT(DYRK1A) to screen chemical library
+## Use GEO-BERT(DYRK1A) to screen chemical library (Real-world Drug Discovery Practice, Please follow)
 -----------------------------------
 1. Prepare weights of the fine-tuned model GEO-BERT(DYRK1A).
 
