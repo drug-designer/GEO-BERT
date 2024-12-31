@@ -47,23 +47,31 @@ A brief introduction to each python file:
 
 9. data: the public dataset and DYRK1A dataset for finetuing.
 
-## Use example of GEO-BERT
+## Pre-training of GEO-BERT (NOT Required)
+-----------------------------------
+1. Here, we have provided one pre-trained model based on 1M drug-like molecules from ChEMBL . We discourage users from pre-training new models with the same parameters and the same molecular data.
+
+   * Get into the current direcotry of GEO-BERT with the command of "cd GEO-BERT", and then unzip the compressed file with "unzip Medium.zip" to obtain the weights file of the pre-trained GEO-BERT model, i.e.,"bert_weightsMedium_1.h5".
+   
+3. IF users are interested in training a new pre-trained GEO-BERT model.
+
+   *The following files are required: 
+
+   utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
+   
+   * use the command "python pretrain_new.py" to perform pre-training.
+
+
+## Fine-tuing of GEO-BERT 
 -----------------------------------
 1. Prepare for datasets and model weights
 
 * First, use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip Medium. zip" to decompress the weight file with the file structure of "bert_weightsMedium_1.h5".
 
 * Second, use the command "cd data" to enter the direcotry of data, and then use the command "unzip pretrain_datasets.zip" and "unzip datasets.zip" to decompress the pretraining and finetuning datasets, with the file structure of "data/chembl_conformer_select_145wan.txt". Put eight public datasets and DYRK1A datasets in "data/clf/...".
+We provide two cases to demonstrate fine-tuning for DYRK1A acvivity prediction
 
-2. Pre-training
-
-* Required files:
-
-   utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt
-   
-* use the command "python pretrain_new.py" to pre-train for GEO-BERT.
-
-3. Fine-tuning for public datasets.
+1. Fine-tuning for public datasets.
 
 * Required files for BBBP dataset:
 
@@ -79,15 +87,16 @@ A brief introduction to each python file:
 
 * Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
 
-## Application example of GEO-BERT
+## Application of GEO-BERT(DYRK1A)
 -----------------------------------
-1. Prepare for model weights.
+1. Prepare weights of the fine-tuned model GEO-BERT(DYRK1A) .
 
-* Use the command "cd GEO-BERT" to enter the current direcotry of GEO-BERT, and then use the command "unzip model_weights_DYRK1A.zip" to decompress the weight file with the file structure of "model_weights_DYRK1A.h5".
+* Enter the current direcotry of GEO-BERT with the command of "cd GEO-BERT";
+* unzip the compressed file with the command of "unzip model_weights_DYRK1A.zip" to obtain the file of "model_weights_DYRK1A.h5".
   
-2. Start predicting.
+2. Start bioactivity/property prediction.
 
-* Use the command " python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt" "
+* execute the command with " python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt" "
 
 ## Acknowledgments
 -----------------------------------
