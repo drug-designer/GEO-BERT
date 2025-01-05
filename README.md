@@ -82,7 +82,7 @@ Here, we provide several cases of study to deomonstrate fine-tuning with dataset
 
 * Required files for BBBP fine-tuning: utils_new_hyperopt.py, model_new_hyperopt.py,dataset_scaffold_random.py,Class_hyperopt.py, data/clf/BBBP.csv
 
-* $ cd GEO-BERT" # enter the directory of GEO-BERT
+* $ cd GEO-BERT # enter the directory of GEO-BERT
 
 * $ python Class_hyperopt.py # perform fine-tuning for GEO-BERT.
 
@@ -94,7 +94,9 @@ In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) 
 
 * Required files for DYRK1A fine-tuning: utils_new_hyperopt.py,model_new_hyperopt.py, dataset_new_DYRK1A.py, Class_hyperopt_DYRK1A.py, data/clf/DYRK1A_train.csv, data/clf/DYRK1A_test.csv
 
-* Use the command "python Class_hyperopt_DYRK1A.py" to fine-tune for GEO-BERT on DYRK1A dataset.
+* $ python Class_hyperopt_DYRK1A.py # Fine-tune for GEO-BERT on DYRK1A dataset and determine the optimal hyperparameters.
+
+* $ python ###### # Fine-tune for GEO-BERT on DYRK1A dataset, with the optimal hyperparameters and output model performance (train: AUC,MCC etc. and test: AUC, MCC etc.)
 
 ## Use GEO-BERT(DYRK1A) to screen chemical library (Real-world Drug Discovery Practice, Please follow)
 -----------------------------------
