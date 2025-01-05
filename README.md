@@ -102,12 +102,12 @@ In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) 
 -----------------------------------
 1. Prepare weights of the fine-tuned model GEO-BERT(DYRK1A).
 
-* Enter the current direcotry of GEO-BERT with the command of "cd GEO-BERT";
-* unzip the compressed file with the command of "unzip model_weights_DYRK1A.zip -d ./model_weights_DYRK1A" to obtain the file of "model_weights_DYRK1A.h5".
+* $ cd GEO-BERT
+* $ unzip model_weights_DYRK1A.zip -d ./model_weights_DYRK1A" #obtain the file of "model_weights_DYRK1A.h5".
   
 2. Start bioactivity prediction with model(train AUC:0.994, test AUC:0.856).
 
-* execute the command with " python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt" "
+* $ python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt"
 
 ## Acknowledgments
 -----------------------------------
