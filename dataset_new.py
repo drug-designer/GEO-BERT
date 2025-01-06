@@ -5,14 +5,6 @@ import tensorflow as tf
 import random
    
 
-"""     
-
-{'O': 5000757, 'C': 34130255, 'N': 5244317, 'F': 641901, 'H': 37237224, 'S': 648962, 
-'Cl': 373453, 'P': 26195, 'Br': 76939, 'B': 2895, 'I': 9203, 'Si': 1990, 'Se': 1860, 
-'Te': 104, 'As': 202, 'Al': 21, 'Zn': 6, 'Ca': 1, 'Ag': 3}
-
-H C N O F S  Cl P Br B I Si Se
-"""
 
 str2num = {'<pad>': 0, 'H': 1, 'C': 2, 'N': 3, 'O': 4, 'F': 5, 'S': 6, 'Cl': 7, 'P': 8, 'Br': 9,
            'B': 10, 'I': 11, 'Si': 12, 'Se': 13, '<unk>': 14, '<mask>': 15, '<global>': 16,
@@ -73,10 +65,7 @@ class Graph_Bert_Dataset(object):
         temp2 = np.ones((len(nums_list), len(nums_list)))
         temp2[1:, 1:] = distance_angle_matrix*(1e-4)
         distance_angle_matrix = temp2
-
-
         nums_list=  [str2num.get(i,str2num['<unk>']) for i in atoms_bonds_list]
-
         choices = np.random.permutation(len(nums_list)-1)[:max(int(len(nums_list)*0.15),1)] + 1
         y = np.array(nums_list).astype('int64')
         weight = np.zeros(len(nums_list))
@@ -88,19 +77,12 @@ class Graph_Bert_Dataset(object):
             elif rand < 0.9 :
                 #nums_list[i] = int(np.random.rand() * 14 + 1)
                 nums_list[i] = random.choice([x for x in range(1, 21) if x != 16])
-
-
         x = np.array(nums_list).astype('int64')
         weight = weight.astype('float32')
-
-
-
-
         return x, adjoin_matrix, y, weight,distance_angle_matrix  
 
     def tf_numerical_smiles(self, data):
-        # x,adjoin_matrix,y,weight = tf.py_function(self.balanced_numerical_smiles,
-        #                                           [data], [tf.int64, tf.float32 ,tf.int64,tf.float32])
+
         x, adjoin_matrix, y, weight,distance_angle_matrix = tf.py_function(self.numerical_smiles, [data],
                                                      [tf.int64, tf.float32, tf.int64, tf.float32,tf.float32])
 
@@ -147,7 +129,6 @@ class Graph_Classification_Dataset(object):
             idx = ndata[(ndata[self.smiles_field].str.len() >= lengths[i]) & (
                     ndata[self.smiles_field].str.len() < lengths[i + 1])].sample(frac=0.8).index
             ntrain_idx.extend(idx)
-
 
         train_data = data[data.index.isin(ptrain_idx+ntrain_idx)]
 
@@ -241,9 +222,6 @@ class Graph_Regression_Dataset(object):
 
     def get_data(self):
         data = self.df
-
-
-
         lengths = [0, 25, 50, 75, 100]
 
         train_idx = []
@@ -263,8 +241,6 @@ class Graph_Regression_Dataset(object):
 
         test_data = data[data.index.isin(test_idx)]
         val_data = data[~data.index.isin(test_idx)]
-
-
 
         self.dataset1 = tf.data.Dataset.from_tensor_slices((train_data[self.smiles_field], train_data[self.label_field]))
         self.dataset1 = self.dataset1.map(self.tf_numerical_smiles).cache().padded_batch(64, padded_shapes=(
@@ -300,7 +276,6 @@ class Graph_Regression_Dataset(object):
         y.set_shape([None])
         return x, adjoin_matrix , y
 
-
 class Inference_Dataset(object):
     def __init__(self,sml_list,max_len=100,addH=True):
         self.vocab = str2num
@@ -313,7 +288,6 @@ class Inference_Dataset(object):
         self.dataset = tf.data.Dataset.from_tensor_slices((self.sml_list,))
         self.dataset = self.dataset.map(self.tf_numerical_smiles).padded_batch(187, padded_shapes=(   #  padded_batch(64
             tf.TensorShape([None]), tf.TensorShape([None,None]),tf.TensorShape([None,None]),tf.TensorShape([1]),tf.TensorShape([None]))).cache().prefetch(20)
-
         return self.dataset
 
     def numerical_smiles(self, smiles):
@@ -344,82 +318,6 @@ class Inference_Dataset(object):
         smiles.set_shape([1])
         atom_list.set_shape([None])
         return x, adjoin_matrix,distance_angle_matrix,smiles,atom_list
-
-
-
-# class multi_task_dataset(object):
-#     def __init__(self,path_list,smiles_field,label_field,max_len=100,addH=True):
-#         self.vocab = str2num
-#         self.smiles_field = smiles_field
-#         self.label_field = label_field
-#         self.devocab = num2str
-#         self.addH =  addH
-#         self.pathlist = path_list
-#
-#     def get_data(self):
-#         x_train_list = []
-#         y_train_list = []
-#         mask_train_list=[]
-#         test_dataset_list = []
-#         for i,path in enumerate(self.pathlist):
-#             data = pd.read_csv(path,sep='\t')
-#             lengths = [0, 25, 50, 75, 100]
-#             train_idx = []
-#             for ii in range(4):
-#                 idx = data[(data[self.smiles_field].str.len() >= lengths[ii]) & (
-#                         data[self.smiles_field].str.len() < lengths[ii + 1])].sample(frac=0.8).index
-#                 train_idx.extend(idx)
-#             data1 = data[data.index.isin(train_idx)].copy()
-#             data2 = data[~data.index.isin(train_idx)].copy()
-#             x_train_list += data1[self.smiles_field].tolist()
-#             y_train = -np.ones((len(data1),len(self.pathlist))).astype('float32')
-#             mask_train = np.zeros((len(data1),len(self.pathlist))).astype('float32')
-#
-#             y_train[:,i] = np.array(data1[self.label_field])
-#             mask_train[:, i] = 1
-#
-#             y_train_list.append(y_train)
-#             mask_train_list.append(mask_train)
-#
-#             x_test = data2[self.smiles_field].tolist()
-#             y_test = -np.ones((len(data2),len(self.pathlist))).astype('float32')
-#             y_test[:,i] = np.array(data2[self.label_field])
-#             mask_test = np.zeros((len(data2),len(self.pathlist))).astype('float32')
-#             mask_test[:, i] = 1
-#             test_dataset_list.append(tf.data.Dataset.from_tensor_slices((x_test,y_test,mask_test)).map(self.tf_numerical_smiles).padded_batch(256,
-#                                                                 padded_shapes=(tf.TensorShape([None]), tf.TensorShape([None, None]),
-#                                                                 tf.TensorShape([None]),tf.TensorShape([None]))).cache().prefetch(100))
-#
-#         y_train_list = np.concatenate(y_train_list,axis=0)
-#         mask_train_list = np.concatenate(mask_train_list,axis=0)
-#
-#         dataset1 = tf.data.Dataset.from_tensor_slices((x_train_list,y_train_list,mask_train_list))
-#         dataset1 = dataset1.map(self.tf_numerical_smiles).shuffle(200).padded_batch(64, padded_shapes=(
-#             tf.TensorShape([None]), tf.TensorShape([None, None]), tf.TensorShape([len(self.pathlist)]),
-#             tf.TensorShape([len(self.pathlist)]))).cache().prefetch(100)
-#         return dataset1, test_dataset_list
-#
-#     def numerical_smiles(self, smiles,y,y_mask):
-#         smiles = smiles.numpy().decode()
-#         atoms_list, adjoin_matrix = smiles2adjoin(smiles,explicit_hydrogens=self.addH)
-#         atoms_list = ['<global>'] + atoms_list
-#         nums_list =  [str2num.get(i,str2num['<unk>']) for i in atoms_list]
-#         temp = np.ones((len(nums_list),len(nums_list)))
-#         temp[1:,1:] = adjoin_matrix
-#         adjoin_matrix = ((1-temp)*(-1e9)).astype('float32')
-#         x = np.array(nums_list).astype('int64')
-#         return x, adjoin_matrix,y,y_mask
-#
-#     def tf_numerical_smiles(self, smiles,y,y_mask):
-#         x,adjoin_matrix,y, y_mask = tf.py_function(self.numerical_smiles, [smiles,y,y_mask], [tf.int64, tf.float32,tf.float32, tf.float32])
-#         x.set_shape([None])
-#         adjoin_matrix.set_shape([None,None])
-#         y.set_shape([len(self.pathlist)])
-#         y_mask.set_shape([len(self.pathlist)])
-#         return x, adjoin_matrix,y, y_mask
-
-
-
 
 class Graph_Regression_and_Pretraining_Dataset(object):
     def __init__(self,path,smiles_field='Smiles',label_field='Label',normalize=True,addH=True,max_len=100):
