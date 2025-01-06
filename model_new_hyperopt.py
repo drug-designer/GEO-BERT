@@ -314,7 +314,7 @@ class BertModel(tf.keras.Model):
 
 
 class PredictModel(tf.keras.Model):
-    def __init__(self,num_layers = 6,d_model = 256,dff = 512,num_heads = 8,vocab_size =21,dropout_rate = 0.1,a=1,dense_dropout=0.1):  # 0 0.1 0.5 0.05
+    def __init__(self,num_layers = 6,d_model = 256,dff = 512,num_heads = 8,vocab_size =21,dropout_rate = 0.1,a=1,dense_dropout=0.1):
         super(PredictModel, self).__init__()
         self.encoder = Encoder(num_layers=num_layers,d_model=d_model,
                         num_heads=num_heads,dff=dff,input_vocab_size=vocab_size,maximum_position_encoding=200,rate=dropout_rate)
