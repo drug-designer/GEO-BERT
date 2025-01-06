@@ -12,8 +12,6 @@ from tensorflow.python.client import device_lib
 import os
 import csv
 
-
-
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 keras.backend.clear_session()
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
@@ -21,16 +19,12 @@ os.environ['TF_DETERMINISTIC_OPS'] = '1'
 def get_header(path):
     with open(path) as f:
         header = next(csv.reader(f))
-
     return header
-
 
 def get_task_names(path, use_compound_names=False):
     index = 2 if use_compound_names else 1
     task_names = get_header(path)[index:]
-
     return task_names
-
 
 def count_parameters(model):
     total_params = 0
@@ -78,8 +72,6 @@ def main(seed, args):
     elif task == 'toxcast_data':
         label = get_task_names('data/clf/toxcast_data.csv')
 
-   
-
     arch = {'name': 'Medium', 'path': 'medium_weights'}  
     pretraining = True
     pretraining_str = 'pretraining' if pretraining else ''
@@ -119,8 +111,6 @@ def main(seed, args):
         temp.encoder.save_weights(
             arch['path']+'/bert_weights_encoder{}_{}.h5'.format(arch['name'], trained_epoch))
         del temp
-        
-
         pred = model(x, mask=mask, training=True, adjoin_matrix=adjoin_matrix, distance_angle_matrix=distance_angle_matrix)
         model.encoder.load_weights(
             arch['path']+'/bert_weights_encoder{}_{}.h5'.format(arch['name'], trained_epoch))
@@ -158,14 +148,12 @@ def main(seed, args):
                 grads = tape.gradient(loss, model.trainable_variables)
                 optimizer.apply_gradients(zip(grads, model.trainable_variables))
         print('epoch: ', epoch, 'loss: {:.4f}'.format(loss.numpy().item()))
-
         y_true = {}
         y_preds = {}
         for i in range(len(label)):
             y_true[i] = []
             y_preds[i] = []
 
-        
         for x, adjoin_matrix, distance_angle_matrix,y in val_dataset:
             seq = tf.cast(tf.math.equal(x, 0), tf.float32)
             mask = seq[:, tf.newaxis, tf.newaxis, :]
@@ -204,8 +192,6 @@ def main(seed, args):
                 continue
             y_p = tf.sigmoid(y_p).numpy()
             y_pl = np.where(y_p >= 0.5, 1, 0)
-            
-
             y_p=y_p.tolist()
             y_pl=y_pl.tolist()
             
@@ -217,17 +203,15 @@ def main(seed, args):
             f1 = f1_score(y_t, y_pl)
 
             def compute_confusion_matrix(precited, expected):
-               
-                part = precited ^ expected  # 对结果进行分类，亦或使得判断正确的为0,判断错误的为1
+                part = precited ^ expected  
                 part = part.astype(np.int64)
-                
-                pcount = np.bincount(part)  # 分类结果统计，pcount[0]为0的个数，pcount[1]为1的个数
-                tp_list = list(precited & expected)  # 将TP的计算结果转换为list
-                fp_list = list(precited & ~expected)  # 将FP的计算结果转换为list
-                tp = tp_list.count(1)  # 统计TP的个数
-                fp = fp_list.count(1)  # 统计FP的个数
-                tn = pcount[0] - tp  # 统计TN的个数
-                fn = pcount[1] - fp  # 统计FN的个数
+                pcount = np.bincount(part)  
+                tp_list = list(precited & expected)  
+                fp_list = list(precited & ~expected)  
+                tp = tp_list.count(1)  
+                fp = fp_list.count(1) 
+                tn = pcount[0] - tp  
+                fn = pcount[1] - fp  
                 return tp, fp, tn, fn
             Y1 = np.array(y_pl).flatten()
             T1 = np.array(y_t).flatten()
@@ -320,8 +304,6 @@ def main(seed, args):
             continue
         y_p = tf.sigmoid(y_p).numpy()
         y_pl = np.where(y_p >= 0.5, 1, 0)
-
-        
         AUC_new = roc_auc_score(y_t, y_p, average=None)
         #print(y_p)
         MCC = matthews_corrcoef(y_t, y_pl)
@@ -330,15 +312,15 @@ def main(seed, args):
         f1 = f1_score(y_t, y_pl)
 
         def compute_confusion_matrix(precited, expected):
-            part = precited ^ expected  # 对结果进行分类，亦或使得判断正确的为0,判断错误的为1
+            part = precited ^ expected  
             part=part.astype(np.int64)
-            pcount = np.bincount(part)  # 分类结果统计，pcount[0]为0的个数，pcount[1]为1的个数
-            tp_list = list(precited & expected)  # 将TP的计算结果转换为list
-            fp_list = list(precited & ~expected)  # 将FP的计算结果转换为list
-            tp = tp_list.count(1)  # 统计TP的个数
-            fp = fp_list.count(1)  # 统计FP的个数
-            tn = pcount[0] - tp  # 统计TN的个数
-            fn = pcount[1] - fp  # 统计FN的个数
+            pcount = np.bincount(part)  
+            tp_list = list(precited & expected) 
+            fp_list = list(precited & ~expected)  
+            tp = tp_list.count(1)  
+            fp = fp_list.count(1)  
+            tn = pcount[0] - tp  
+            fn = pcount[1] - fp  
             return tp, fp, tn, fn
         Y1 = np.array(y_pl).flatten()
         T1 = np.array(y_t).flatten()
@@ -369,11 +351,10 @@ def main(seed, args):
 
     return auc, auc_new, auc_list     
                                                            
-
-space = {"dense_dropout": hp.quniform("dense_dropout", 0, 0.1, 0.01), 
-        "learning_rate": hp.loguniform("learning_rate", np.log(2e-5), np.log(10e-5)),
+space = {"dense_dropout": hp.quniform("dense_dropout", 0, 0.5, 0.05), 
+        "learning_rate": hp.loguniform("learning_rate", np.log(3e-5), np.log(15e-5)),
         "batch_size":hp.choice("batch_size", [16,32,48,64]),  
-        "num_heads":hp.choice("num_heads", [4,8]),
+        "num_heads":hp.choice("num_heads", [4,8]),  
         }
 
 
@@ -413,24 +394,6 @@ best_dict["batch_size"] = a[best["batch_size"]]
 best_dict["num_heads"] = b[best["num_heads"]]
 print(best_dict)
 print(hy_main(best_dict))
-
-# if __name__ == '__main__':
-
-#     args = {"dense_dropout":0.4, "learning_rate":5.147496336624254e-05, "batch_size":32, "num_heads":8}
-#     auc_list = []
-#     test_auc_list = []
-#     test_all_auc_list = []
-#     for seed in [0,1,2,3,4,5,6,7,8,9]:
-#         print(seed)
-#         auc, test_auc, a_list= main(seed, args)
-#         auc_list.append(auc)
-#         test_auc_list.append(test_auc)  
-#         test_all_auc_list.append(a_list)
-#     auc_list.append(np.mean(auc_list))
-#     test_auc_list.append(np.mean(test_auc_list))
-#     print(auc_list)
-#     print(test_auc_list)
-#     print(test_all_auc_list)
 
 
 
