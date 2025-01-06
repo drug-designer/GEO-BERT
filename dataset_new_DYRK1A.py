@@ -49,7 +49,6 @@ class Graph_Classification_Dataset(object):
         # val_data = self.df_train[0.8*self.df_train :]
         # test_data = self.df_test
 
-
         self.dataset1 = tf.data.Dataset.from_tensor_slices(
             (train_data[self.smiles_field], train_data[self.label_field]))    
         self.dataset1 = self.dataset1.map(self.tf_numerical_smiles).cache().padded_batch(16, padded_shapes=(    
