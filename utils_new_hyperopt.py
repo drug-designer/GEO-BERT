@@ -84,8 +84,6 @@ def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
 
     extended_adj_matrix = add_bond_nodes(adj_matrix, mol)
 
-    #print(extended_adj_matrix)
-
     for i in range(num_atoms):
         for j in range(i + 1, num_atoms):
             if adj_matrix[i, j] == 1:  
@@ -97,8 +95,7 @@ def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
                 bond_length_rounded = round(bond_length, 2)
                 #print(bond_length_rounded)
                 bond_lengths.append(bond_length_rounded)
-
-                
+  
                 extended_adj_matrix[i, j] = bond_length_rounded
                 extended_adj_matrix[j, i] = bond_length_rounded  
                 distance_matrix=extended_adj_matrix.copy()
@@ -121,19 +118,14 @@ def calculate_all_bond_lengths_and_angles(positions, adj_matrix,mol):
 
                         for bond1 in mol.GetBonds():
                                 if (bond1.GetBeginAtomIdx() == k and bond1.GetEndAtomIdx() == i) or (bond1.GetBeginAtomIdx() == i and bond1.GetEndAtomIdx() == k) :
-                                    #print(1)
                                     for bond2 in mol.GetBonds():
-                                        if (bond2.GetBeginAtomIdx() == i and bond2.GetEndAtomIdx() == j) or (bond2.GetBeginAtomIdx() == j and bond2.GetEndAtomIdx() == i) :
-                                            #print(2)
+                                        if (bond2.GetBeginAtomIdx() == i and bond2.GetEndAtomIdx() == j) or (bond2.GetBeginAtomIdx() == j and bond2.GetEndAtomIdx() == i) :            
                                             if bond1.GetIdx() != bond2.GetIdx():
-                                                #print(3)
                                                 extended_adj_matrix[num_atoms + bond1.GetIdx(), num_atoms + bond2.GetIdx()] = angle
                                                 extended_adj_matrix[num_atoms + bond2.GetIdx(), num_atoms + bond1.GetIdx()] = angle
                 angle_matrix = extended_adj_matrix.copy()
                 angle_matrix[:num_atoms, :num_atoms] = 0
 
-
-    #return  distance_matrix,angle_matrix
     return  extended_adj_matrix
 
 
@@ -196,12 +188,8 @@ def smiles2adjoin(smiles,explicit_hydrogens=True,canonical_atom_order=False):
 
     adj_matrix_ethanol = Chem.GetAdjacencyMatrix(mol)
 
-    
     distance_angle_matrix = calculate_all_bond_lengths_and_angles(atom_positions, adj_matrix_ethanol, mol)
 
-
-    #return atoms_list,bonds_list,atoms_bonds_list,extended_adj_matrix,distance_matrix,angle_matrix
-    
     return atoms_bonds_list,extended_adj_matrix,distance_angle_matrix
 
-    #return atoms_bonds_list,extended_adj_matrix
+
