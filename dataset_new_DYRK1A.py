@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from utils_new_hyperopt import smiles2adjoin
 import tensorflow as tf
-   
+from sklearn.model_selection import train_test_split
 
 """     
 
@@ -41,8 +41,8 @@ class Graph_Classification_Dataset(object):
         self.addH = addH
 
     def get_data(self):
-        train_data = self.df_train
-        val_data = self.df_test
+       
+        train_data, val_data = train_test_split(self.df_train, test_size=0.2, random_state=11)
         test_data = self.df_test
 
         # train_data = self.df_train[: 0.8*self.df_train]
