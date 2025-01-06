@@ -62,11 +62,12 @@ def main(seed, args):
     np.random.seed(seed=seed)
     tf.random.set_seed(seed=seed)
 
-    train_dataset, test_dataset , val_dataset = Graph_Classification_Dataset('data/clf/DYRK1A_IC50_train.csv', 
+     train_dataset, test_dataset, val_dataset = Graph_Classification_Dataset('data/clf/DYRK1A_IC50_train.csv', 
                                                                              'data/clf/DYRK1A_IC50_test.csv',
                                                                              smiles_field='SMILES',
-                                                               label_field='Type(active or not)',addH=True).get_data()  
-    
+                                                               label_field='Type(active or not)',
+                                                               addH=True,
+                                                               batch_size=batch_size).get_data() 
                                                         
     x, adjoin_matrix, distance_angle_matrix,y = next(iter(train_dataset.take(1)))
     seq = tf.cast(tf.math.equal(x, 0), tf.float32)
