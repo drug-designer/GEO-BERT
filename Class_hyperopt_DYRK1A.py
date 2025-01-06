@@ -7,12 +7,9 @@ import os
 from model_new_hyperopt import PredictModel, BertModel
 from sklearn.metrics import roc_auc_score, precision_score, recall_score, matthews_corrcoef, f1_score
 from hyperopt import fmin, tpe, hp
-#from utils import get_task_names
 from tensorflow.python.client import device_lib
 import os
 import csv
-
-
 
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 keras.backend.clear_session()
@@ -21,16 +18,12 @@ os.environ['TF_DETERMINISTIC_OPS'] = '1'
 def get_header(path):
     with open(path) as f:
         header = next(csv.reader(f))
-
     return header
-
 
 def get_task_names(path, use_compound_names=False):
     index = 2 if use_compound_names else 1
     task_names = get_header(path)[index:]
-
     return task_names
-
 
 def count_parameters(model):
     total_params = 0
@@ -48,37 +41,8 @@ def main(seed, args):
     
     task = 'BBBP'
 
-    if task =='BBBP':
-        label = ['p_np']
-
-    elif task =='bace':
-        label = ['Class']
-
-    elif task == 'HIV':
-        label = ['HIV_active']  
-
-    elif task == 'clintox':
-        label = ['FDA_APPROVED', 'CT_TOX']
-
-    elif task == 'tox21':
-        label = ['NR-AR', 'NR-AR-LBD', 'NR-AhR', 'NR-Aromatase', 'NR-ER', 'NR-ER-LBD', 'NR-PPAR-gamma', 'SR-ARE', 'SR-ATAD5', 'SR-HSE', 'SR-MMP', 'SR-p53']
-        
-    elif task == 'muv':
-        label = ['MUV-466', 'MUV-548', 'MUV-600', 'MUV-644', 'MUV-652',	'MUV-689', 'MUV-692', 'MUV-712', 'MUV-713', 'MUV-733', 'MUV-737', 'MUV-810', 'MUV-832',	'MUV-846', 'MUV-852', 'MUV-858', 'MUV-859'
-    ]
-        
-    elif task == 'sider':
-        label = ['Hepatobiliary disorders','Metabolism and nutrition disorders', 'Product issues', 'Eye disorders', 'Investigations','Musculoskeletal and connective tissue disorders',
-        'Gastrointestinal disorders', 'Social circumstances', 'Immune system disorders', 'Reproductive system and breast disorders', 'Neoplasms benign, malignant and unspecified (incl cysts and polyps)', 
-        'General disorders and administration site conditions', 'Endocrine disorders', 'Surgical and medical procedures', 'Vascular disorders', 'Blood and lymphatic system disorders', 
-        'Skin and subcutaneous tissue disorders', 'Congenital, familial and genetic disorders', 'Infections and infestations', 'Respiratory, thoracic and mediastinal disorders', 'Psychiatric disorders', 
-        'Renal and urinary disorders', 'Pregnancy, puerperium and perinatal conditions', 'Ear and labyrinth disorders', 'Cardiac disorders', 'Nervous system disorders', 'Injury, poisoning and procedural complications'
-    ]
-
-    elif task == 'toxcast_data':
-        label = get_task_names('data/clf/toxcast_data.csv')
-
-   
+    if task =='DYRK1A':
+        label = ['label']
 
     arch = {'name': 'Medium', 'path': 'medium_weights'}
     pretraining = True
@@ -154,7 +118,6 @@ def main(seed, args):
                         continue
                     y_t = tf.gather(y_label,validId)
                     y_p = tf.gather(y_pred,validId)
-            
                     loss += loss_object(y_t, y_p)
                 loss = loss/(len(label))
                 grads = tape.gradient(loss, model.trainable_variables)
@@ -166,7 +129,6 @@ def main(seed, args):
         for i in range(len(label)):
             y_true[i] = []
             y_preds[i] = []
-
         
         for x, adjoin_matrix, distance_angle_matrix,y in val_dataset:
             seq = tf.cast(tf.math.equal(x, 0), tf.float32)
@@ -206,13 +168,8 @@ def main(seed, args):
                 continue
             y_p = tf.sigmoid(y_p).numpy()
             y_pl = np.where(y_p >= 0.5, 1, 0)
-            
-
             y_p=y_p.tolist()
             y_pl=y_pl.tolist()
-            
-
-        
             AUC_new = roc_auc_score(y_t, y_p, average=None)
             #print(y_p)
             MCC = matthews_corrcoef(y_t, y_pl)
@@ -221,10 +178,8 @@ def main(seed, args):
             f1 = f1_score(y_t, y_pl)
 
             def compute_confusion_matrix(precited, expected):
-               
                 part = precited ^ expected  
-                part = part.astype(np.int64)
-                
+                part = part.astype(np.int64)  
                 pcount = np.bincount(part)  
                 tp_list = list(precited & expected)  
                 fp_list = list(precited & ~expected)  
@@ -249,8 +204,7 @@ def main(seed, args):
             recall_list.append(recall)
             f1_list.append(f1)
             SP_list.append(SP)
-            
-            
+   
         auc_new = np.nanmean(auc_list)
         mcc_new = np.nanmean(mcc_list)
         ACC_new = np.nanmean(accuracy_list)
@@ -374,10 +328,10 @@ def main(seed, args):
     return auc, auc_new, auc_list     
                                                            
 
-space = {"dense_dropout": hp.quniform("dense_dropout", 0, 0.1, 0.01), 
-        "learning_rate": hp.loguniform("learning_rate", np.log(2e-5), np.log(10e-5)),
-        "batch_size":hp.choice("batch_size", [16,32,48,64]),    
-        "num_heads":hp.choice("num_heads", [4,8]),
+space = {"dense_dropout": hp.quniform("dense_dropout", 0, 0.5, 0.05), 
+        "learning_rate": hp.loguniform("learning_rate", np.log(3e-5), np.log(15e-5)),
+        "batch_size":hp.choice("batch_size", [16,32,48,64]),  
+        "num_heads":hp.choice("num_heads", [4,8]),  
         }
 
 
@@ -417,26 +371,4 @@ best_dict["batch_size"] = a[best["batch_size"]]
 best_dict["num_heads"] = b[best["num_heads"]]
 print(best_dict)
 print(hy_main(best_dict))
-
-# if __name__ == '__main__':
-
-#     args = {"dense_dropout":0.4, "learning_rate":5.147496336624254e-05, "batch_size":32, "num_heads":8}
-#     auc_list = []
-#     test_auc_list = []
-#     test_all_auc_list = []
-#     for seed in [0,1,2,3,4,5,6,7,8,9]:
-#         print(seed)
-#         auc, test_auc, a_list= main(seed, args)
-#         auc_list.append(auc)
-#         test_auc_list.append(test_auc)  
-#         test_all_auc_list.append(a_list)
-#     auc_list.append(np.mean(auc_list))
-#     test_auc_list.append(np.mean(test_auc_list))
-#     print(auc_list)
-#     print(test_auc_list)
-#     print(test_all_auc_list)
-
-
-
-
 
