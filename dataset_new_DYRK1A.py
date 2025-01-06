@@ -25,7 +25,7 @@ num2str =  {i:j for j,i in str2num.items()}
 
 
 class Graph_Classification_Dataset(object):
-    def __init__(self,path_train,path_test,smiles_field='Smiles',label_field='Label',max_len=100,addH=True):
+    def __init__(self,path_train,path_test,smiles_field='Smiles',label_field='Label',max_len=100,addH=True,batch_size=16):
         if path_train.endswith('.txt') or path_train.endswith('.tsv'):
             self.df = pd.read_csv(path_train,sep='\t')
         else:
@@ -39,6 +39,7 @@ class Graph_Classification_Dataset(object):
         self.df_train = self.df_train[self.df_train[smiles_field].str.len() <= max_len]
         self.df_test = self.df_test[self.df_test[smiles_field].str.len() <= max_len]
         self.addH = addH
+        self.batch_size = batch_size
 
     def get_data(self):
        
@@ -51,7 +52,7 @@ class Graph_Classification_Dataset(object):
 
         self.dataset1 = tf.data.Dataset.from_tensor_slices(
             (train_data[self.smiles_field], train_data[self.label_field]))    
-        self.dataset1 = self.dataset1.map(self.tf_numerical_smiles).cache().padded_batch(16, padded_shapes=(    
+        self.dataset1 = self.dataset1.map(self.tf_numerical_smiles).cache().padded_batch(self.batch_size, padded_shapes=(    
             tf.TensorShape([None]), tf.TensorShape([None, None]),tf.TensorShape([None, None]),tf.TensorShape([1]))).shuffle(100).prefetch(16)   
 
         self.dataset2 = tf.data.Dataset.from_tensor_slices((test_data[self.smiles_field], test_data[self.label_field]))
