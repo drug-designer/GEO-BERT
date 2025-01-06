@@ -96,7 +96,7 @@ In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) 
 
 * $ python Class_hyperopt_DYRK1A.py # Fine-tune for GEO-BERT on DYRK1A dataset and determine the optimal hyperparameters.
 
-* $ python ###### # Fine-tune for GEO-BERT on DYRK1A dataset, with the optimal hyperparameters and output model performance (train: AUC,MCC etc. and test: AUC, MCC etc.)
+* $ python Class_test_DYRK1A.py # Fine-tune for GEO-BERT on DYRK1A dataset, with the optimal hyperparameters and output model performance (test-AUC: 0.871, test-MCC: 0.648 etc.)
 
 ## Use GEO-BERT(DYRK1A) to screen chemical library (Real-world Drug Discovery Practice, Please follow)
 -----------------------------------
@@ -105,7 +105,7 @@ In this study, we aim to build GEO-BERT model for DYRK1A, i.e. GEO-BERT(DYRK1A) 
 * $ cd GEO-BERT
 * $ unzip model_weights_DYRK1A.zip -d ./model_weights_DYRK1A" #obtain the file of "model_weights_DYRK1A.h5".
   
-2. Start bioactivity prediction with model(train AUC:0.994, test AUC:0.856).
+2. Start bioactivity prediction with model(test-AUC: 0.871, test-MCC: 0.648 etc.).
 
 * $ python predict.py --input_path "Your_SMILES_file.txt" --output_path "Your_Prediction_output.txt"
 
