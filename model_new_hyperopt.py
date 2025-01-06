@@ -5,46 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
 def gelu(x):
     return 0.5 * x * (1.0 + tf.math.erf(x / tf.sqrt(2.)))
-
-
-# def get_angles(pos, i, d_model):
-#   angle_rates = 1 / np.power(10000, (2 * (i//2)) / np.float32(d_model))
-#   return pos * angle_rates
-#
-#
-# def positional_encoding(position, d_model):
-#     angle_rads = get_angles(np.arange(position)[:, np.newaxis],
-#                             np.arange(d_model)[np.newaxis, :],
-#                             d_model)
-#
-#     # apply sin to even indices in the array; 2i
-#     angle_rads[:, 0::2] = np.sin(angle_rads[:, 0::2])
-#
-#     # apply cos to odd indices in the array; 2i+1
-#     angle_rads[:, 1::2] = np.cos(angle_rads[:, 1::2])
-#
-#     pos_encoding = angle_rads[np.newaxis, ...]
-#
-#     return tf.cast(pos_encoding, dtype=tf.float32)
-
-
-# def create_padding_mask(seq):
-#     seq = tf.cast(tf.math.equal(seq, 0), tf.float32)
-#
-#     # add extra dimensions to add the padding
-#     # to the attention logits.
-#     return seq[:, tf.newaxis, tf.newaxis, :]  # (batch_size, 1, 1, seq_len)
-#
-# def create_look_ahead_mask(size):
-#   mask = 1 - tf.linalg.band_part(tf.ones((size, size)), -1, 0)
-#   return mask  # (seq_len, seq_len)
-
-
-
-
 
 
 def scaled_dot_product_attention(q, k, v, mask,adjoin_matrix,distance_angle_matrix):
@@ -179,35 +141,6 @@ class EncoderLayer(tf.keras.layers.Layer):
         out2 = self.layernorm2(out1 + ffn_output)  # (batch_size, input_seq_len, d_model)
 
         return out2,attention_weights
-
-
-# class EmbeddingDense(tf.keras.layers.Layer):
-#     """运算跟Dense一致，只不过kernel用Embedding层的embedding矩阵
-#     """
-#
-#     def __init__(self,embedding_layer, activation=None, **kwargs):
-#         super(EmbeddingDense, self).__init__(**kwargs)
-#         self.activation = activation
-#         self.units = embedding_layer.input_dim
-#         self.embedding_layer = embedding_layer
-#         self.activation = tf.keras.layers.Activation(self.activation)
-#
-#
-#     def build(self, input_shape):
-#         super(EmbeddingDense, self).build(input_shape)
-#         self.kernel = tf.transpose(self.embedding_layer.embeddings)
-#         self.bias = self.add_weight(name='bias',
-#                                     shape=(self.units,),
-#                                     initializer='zeros')
-#
-#     def call(self, inputs):
-#         outputs = tf.matmul(inputs, self.kernel)
-#         outputs = outputs+self.bias
-#         outputs = self.activation(outputs)
-#         return outputs
-#
-#     def compute_output_shape(self, input_shape):
-#         return input_shape[:-1] + (self.units,)
 
 
 class Encoder(tf.keras.Model):
