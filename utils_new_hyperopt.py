@@ -5,6 +5,9 @@ import numpy as np
 import openbabel as ob
 from rdkit.Chem import AllChem
 import tensorflow as tf
+from multi_conformer_git import get_position
+
+NUM_CONFORM = "1"   # 1, 10-20, 100
 
 def obsmitosmile(smi):
     conv = ob.OBConversion()
@@ -139,21 +142,22 @@ def smiles2adjoin(smiles,explicit_hydrogens=True,canonical_atom_order=False):
 
     if explicit_hydrogens:
         mol = Chem.AddHs(mol)
+        mol_copy = mol.Copy()
     else:
         mol = Chem.RemoveHs(mol)
 
     if canonical_atom_order:
         new_order = rdmolfiles.CanonicalRankAtoms(mol)
         mol = rdmolops.RenumberAtoms(mol, new_order)
-    num_atoms = mol.GetNumAtoms()
+    num_atoms = mol.GetNumAtoms() 
 
     atoms_list = []
     bonds_list = []
     atoms_bonds_list = []
 
-    for i in range(num_atoms):
+    for i in range(num_atoms): 
         atom = mol.GetAtomWithIdx(i)
-        atoms_list.append(atom.GetSymbol())
+        atoms_list.append(atom.GetSymbol()) 
 
     num_bonds = mol.GetNumBonds()
     for j in range(num_bonds):
@@ -183,8 +187,12 @@ def smiles2adjoin(smiles,explicit_hydrogens=True,canonical_atom_order=False):
        
         mol.AddConformer(Chem.Conformer(mol.GetNumAtoms()))
 
-    
-    atom_positions = mol.GetConformer().GetPositions()
+    if NUM_CONFORM == "1":
+        atom_positions = mol.GetConformer().GetPositions()
+    elif NUM_CONFORM == "10-20":
+        atom_positions = get_position(mol_copy, num_confs=NUM_CONFORM)
+    elif NUM_CONFORM == "100":
+        atom_positions = get_position(mol_copy, num_confs=NUM_CONFORM)
 
     adj_matrix_ethanol = Chem.GetAdjacencyMatrix(mol)
 
