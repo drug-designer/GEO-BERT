@@ -58,6 +58,8 @@ A brief introduction to each python file:
    * File: utils_new_hyperopt.py, model_new_hyperopt.py, dataset_new.py, pretrain_new.py, data/chembl_conformer_select_145wan.txt ($cd "data"; $unzip pretrain_datasets.zip)
    
    * Command: use the command "python pretrain_new.py" to perform pre-training.
+     
+3. This parameter `NUM_CONFORM` in "utils_new_hyperopt" defines the number of molecular conformers used during training and can be adjusted (e.g., 1, 10–20, 100) to balance accuracy and computational cost. Users can set according to their needs.
 
 
 ## Fine-tuing of GEO-BERT (DEMO)
