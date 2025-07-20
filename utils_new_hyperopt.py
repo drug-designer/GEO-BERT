@@ -9,6 +9,43 @@ from multi_conformer_git import get_position
 
 NUM_CONFORM = "1"   # 1, 10-20, 100
 
+
+def generate_conformations_monte_carlo(mol, num_confs):
+
+    params = AllChem.ETKDG()
+    #params.useRandomCoords = True
+    params.numThreads = 100  
+    AllChem.EmbedMultipleConfs(mol, numConfs=num_confs, params=params)
+
+    """
+    for conf in mol.GetConformers():
+        AllChem.UFFOptimizeMolecule(mol, confId=conf.GetId())
+    """
+    return mol
+
+def only_get_conformer_positions(mol):
+    conformer_positions = [mol.GetConformer(conf.GetId()).GetPositions().flatten() for conf in mol.GetConformers()]
+    conformer_positions = np.array(conformer_positions)
+    return conformer_positions
+     
+def weighted_average_conformation(cluster_centers):
+    average_position = np.mean(cluster_centers, axis=0)
+    return average_position
+
+def get_position(mol, num_confs="100"):
+
+    num_atoms = mol.GetNumAtoms()
+    if num_confs == "10-20":
+        num_confs = min(max(10, num_atoms), 20)  
+    elif num_confs == "100":
+        num_confs = 100
+    mol = generate_conformations_monte_carlo(mol, num_confs)
+    cluster_centers = only_get_conformer_positions(mol)
+    avg_conformation = weighted_average_conformation(cluster_centers) 
+    avg_conformation = avg_conformation.reshape(-1, 3) 
+
+    return avg_conformation
+
 def obsmitosmile(smi):
     conv = ob.OBConversion()
     conv.SetInAndOutFormats("smi", "can")
