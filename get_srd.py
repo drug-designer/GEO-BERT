@@ -6,10 +6,43 @@ import srd
 import matplotlib.pyplot as plt
 
 # Load the dataset
-df = pd.read_csv('srd_geobert.csv', index_col=0, header=0)
+df = pd.read_csv('mean_geobert.csv', index_col=0, header=0)
 
 # Set reference method
 ref = 'max'
+refVector = srd.calc_ref(df, ref)
+
+"""
+# Rank-transform
+dfr = df.rank(axis=1)       
+rVr = refVector.rank()
+diffs = dfr.subtract(rVr, axis=0)
+"""
+
+df_aug = df.copy()
+df_aug['Ideal'] = refVector
+
+dfr = df_aug.rank(axis=1, ascending=False)  
+
+rVr = dfr['Ideal']
+dfr = dfr.drop(columns=['Ideal'])  
+
+diffs = dfr.subtract(rVr, axis=0)
+srd_values = diffs.abs().sum()
+#srd_values = np.sqrt((diffs ** 2).sum(axis=0))
+
+# Compute max SRD and normalize
+k = math.floor(len(df) / 2)
+maxSRD = 2 * k**2 if len(df) % 2 == 0 else 2 * k * (k + 1)
+c = srd_values / maxSRD * 100
+srd_values_sorted_mean = (srd_values.sort_values())/10
+
+
+# Load the dataset
+df = pd.read_csv('std_geobert.csv', index_col=0, header=0)
+
+# Set reference method
+ref = 'min'
 refVector = srd.calc_ref(df, ref)
 
 """
@@ -28,14 +61,19 @@ dfr = dfr.drop(columns=['Ideal'])
 
 diffs = dfr.subtract(rVr, axis=0)
 srd_values = diffs.abs().sum()
-#srd_values = np.sqrt((diffs ** 2).sum(axis=0))
 
 # Compute max SRD and normalize
 k = math.floor(len(df) / 2)
 maxSRD = 2 * k**2 if len(df) % 2 == 0 else 2 * k * (k + 1)
 c = srd_values / maxSRD * 100
-srd_values_sorted = (srd_values.sort_values())/10
+srd_values_sorted_std = (srd_values.sort_values())/10
 
+a = 0.6
+b = 0.4
+
+srd_values_add = a*srd_values_sorted_mean + b*srd_values_sorted_std
+
+srd_values_sorted = srd_values_add.sort_values()
 fig, ax = plt.subplots()
 my_colors = ['red','blue','green','purple','orange','brown','magenta','teal','violet','lime',
              'darkorange', 'darkorchid', 'darkred', 'darkseagreen', 'darkslateblue', 'darkslategrey',
@@ -72,10 +110,10 @@ ax2.plot(x_adj, y, color='black')
 ax2.set_ylabel('Rel. frequencies of SRD')
 ax2.set_ylim(bottom=0)
 
-ax.set_title('SRD results')
+ax.set_title('SRD results/ mean: {}, std : {}'.format(a,b))
 ax.set_xlabel('Methods (sorted by SRD value)')
 ax.set_ylabel('SRD (%)')
 
 fig.tight_layout()
-plt.savefig('srd_plot_sorted.png', dpi=300, bbox_inches='tight')
+plt.savefig('srd_plot_sorted_{}_{}.png'.format(a,b), dpi=300, bbox_inches='tight')
 plt.show()
